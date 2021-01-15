@@ -5,10 +5,15 @@ import Form from './Form.jsx';
 import ReviewSnapshot from './ReviewSnapshot.jsx';
 
 class ReviewSummary extends React.Component {
-  constructor() {
+  constructor(props) {
     super();
     this.state = {
+      fullReviews: props.fullReviews,
     };
+  }
+
+  componentDidMount() {
+    console.log(this.props.fullReviews);
   }
 
   render() {

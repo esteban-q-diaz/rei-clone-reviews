@@ -33,11 +33,11 @@ const productReview = mongoose.model('productReview', productReviewSchema)
 /* -----GET REVIEWS--- */
 
 const getReviews = function (callback) {
-  productReview.find((err, reviews) => {
+  productReview.find((err) => {
     if (err) {
-      callback(err);
+      console.log('err');
     } else {
-      callback(null, reviews);
+      console.log('reviews');
     }
   }).limit(12);
 };

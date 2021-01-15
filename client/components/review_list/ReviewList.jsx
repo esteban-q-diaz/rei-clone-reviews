@@ -3,10 +3,15 @@ import UserDetails from './UserDetails.jsx'
 import ReviewDetails from './ReviewDetails.jsx'
 
 class ReviewList extends React.Component {
-  constructor() {
+  constructor(props) {
     super();
     this.state = {
+      fullReviews: props.fullReviews,
     };
+  }
+
+  componentDidMount() {
+    console.log(this.props.fullReviews)
   }
 
   render() {

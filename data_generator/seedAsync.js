@@ -3,6 +3,8 @@ const faker = require('faker');
 const { productReview } = require('../database/product_reviews.js');
 const connection = require('../database/connection.js');
 
+const deleteAll = async () => { await productReview.deleteMany() };
+
 const products = [
   { name: `HOKA ONE ONE Clifton 7 Road-Running Shoes - Women's`, id: 1, url: 'https://www.rei.com/media/8f078d8a-aa49-4f1e-9c8f-120063bb2042?size=646x485' },
   { name: 'Manduka Cork Yoga Block', id: 2, url: 'https://www.rei.com/media/464a596c-9755-4535-aa1b-4f2bae31d780?size=646x485' },
@@ -21,41 +23,52 @@ function randomWord(arr) {
   return arr[Math.floor(Math.random() * arr.length)];
 }
 
-for (let i = 0; i < 100; i += 1) {
-  const product = randomWord(products);
-  const fakerReviews = new productReview({
-    productId: product.id,
-    reviews: [
-      {
-        reviewId: faker.random.number({ min: 1000000, max: 9999999 }),
-        productName: product.name,
-        image: product.url,
-        user: faker.internet.userName(),
-        email: faker.internet.email(),
-        city: faker.address.city(),
-        state: faker.address.state(),
-        review_total: faker.random.number({ min: 1, max: 12 }),
-        stars: faker.random.number({ min: 1, max: 5 }),
-        date: faker.date.past(5),
-        title: faker.random.words(5),
-        description: `${randomWord(adjectives)} ${randomWord(adjectives)}  ${randomWord(nouns)} ${randomWord(nouns)}  ${randomWord(pronouns)} ${randomWord(articles)} ${randomWord(adjectives)} ${randomWord(verbs)}`,
-        age: Math.floor(Math.random() * 75) + 17,
-        recommended: faker.random.boolean(),
-        helpful_count: 0,
-        not_helpful_count: 0,
-      },
-    ],
+const seedProduct = async () => {
+  const reviews = [];
 
-  });
+  for (let i = 0; i < 100; i += 1) {
+    const product = randomWord(products);
+    let fakeReviews = {
+      productId: product.id,
+      reviews: [
+        {
+          reviewId: faker.random.number({ min: 1000000, max: 9999999 }),
+          productName: product.name,
+          image: product.url,
+          user: faker.internet.userName(),
+          email: faker.internet.email(),
+          city: faker.address.city(),
+          state: faker.address.state(),
+          review_total: faker.random.number({ min: 1, max: 12 }),
+          stars: faker.random.number({ min: 1, max: 5 }),
+          date: faker.date.past(5),
+          title: faker.random.words(5),
+          description: `${randomWord(adjectives)} ${randomWord(adjectives)}  ${randomWord(nouns)} ${randomWord(nouns)}  ${randomWord(pronouns)} ${randomWord(articles)} ${randomWord(adjectives)} ${randomWord(verbs)}`,
+          age: Math.floor(Math.random() * 75) + 17,
+          recommended: faker.random.boolean(),
+          helpful_count: 0,
+          not_helpful_count: 0,
+        },
+      ],
+    };
+    reviews.push(fakeReviews);
+  }
+  console.log("reviews: ", reviews);
+  return reviews;
+};
 
-  fakerReviews.save((err, review) => {
-    if (err) {
-      console.log(err);
-    } else {
-      console.log(`${review._id} posted`);
-    }
-  });
-}
+const insertReviews = async () => {
+  const seededProduct = seedProduct();
+  await productReview.insertMany(seededProduct);
+};
+
+const seed = async () => {
+  await deleteAll();
+  await insertReviews();
+  process.exit(0);
+};
+
+seed();
 
 // review_total: Math.floor(Math.random() * 10) + 1,
 //         stars: Math.floor(Math.random() * 5) + 1,
