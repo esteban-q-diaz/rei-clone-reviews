@@ -43,6 +43,20 @@ const getReviews = function (callback) {
   }).limit(12);
 };
 
+/* ----- GET CERTAIN ITEM REVIEWS --- */
+
+const getItemReviews = function (id, callback) {
+  var productId = Number(id[0]);
+  ProductReview.find({productId: productId}, (err, reviews) => {
+    if (err) {
+      callback(err);
+    } else {
+      callback(null, reviews);
+    }
+  }).limit(12);
+};
+
+
 /* -----SAVE REVIEW--- */
 
 const saveReview = function () {
@@ -76,6 +90,18 @@ const helpfulCount = function (param, callback) {
   });
 };
 
+/* ----- NOT HELPFUL BUTON COUNT-- */
+
+const notHelpfulCount = function (param, callback) {
+  ProductReview.findOneAndUpdate({reviewId: param[0]}, { $inc: { not_helpful_count: 1 } }, {new: true }, (err, review) => {
+    if (err) {
+      console.log('err', review, param[0]);
+    } else {
+      callback(null, review);
+    }
+  });
+};
+
 module.exports = {
-  ProductReview, getReviews, saveReview, helpfulCount,
+  ProductReview, getReviews, saveReview, helpfulCount, getItemReviews, notHelpfulCount,
 };

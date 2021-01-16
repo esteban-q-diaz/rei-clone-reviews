@@ -21,6 +21,20 @@ app.get('/api/getallreviews', (req, res) => {
   });
 });
 
+/* ----- GET CERTAIN ITEM REVIEWS --- */
+
+app.get('/api/getitemreviews/:id', (req, res) => {
+  const id = req.params.id;
+  console.log("reqqqq", req.params);
+  mongo.getItemReviews([ id ], (err, reviews) => {
+    if (err) {
+      res.send(err);
+    } else {
+      res.send(reviews);
+    }
+  });
+});
+
 /* -----SAVE REVIEW---*/
 
 // app.post('/api/postreviews', (req, res) => {
@@ -40,6 +54,21 @@ app.put('/api/helpful', (req, res) => {
   const reviewId = req.body.reviewId;
 
   mongo.helpfulCount([reviewId], (err, data) => {
+    if (err) {
+      res.send(err);
+    } else {
+      console.log('helpful count updated');
+      res.status(202).send(data);
+    }
+  });
+});
+
+/* ----- NOT HELPFUL BUTON COUNT-- */
+
+app.put('/api/nothelpful', (req, res) => {
+  const reviewId = req.body.reviewId;
+
+  mongo.notHelpfulCount([reviewId], (err, data) => {
     if (err) {
       res.send(err);
     } else {
