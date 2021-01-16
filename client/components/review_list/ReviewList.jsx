@@ -7,11 +7,12 @@ class ReviewList extends React.Component {
     super();
     this.state = {
       fullReviews: props.fullReviews,
+      currentReview: props.currentReview
     };
   }
 
   componentDidMount() {
-    console.log(this.props.fullReviews)
+    console.log("this", this.props.currentReview);
   }
 
   render() {

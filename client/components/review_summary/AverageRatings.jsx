@@ -1,10 +1,11 @@
 import React from 'react';
 
-function AverageRatings() {
+function AverageRatings({averageRatings}) {
+  console.log('average', averageRatings)
   return (
     <div>
       <p>Average Customer Ratings</p>
-      <p>Overall ☆☆☆☆☆ 5.0 </p>
+      <p>Overall ☆☆☆☆☆ {averageRatings} </p>
     </div>
   );
 }

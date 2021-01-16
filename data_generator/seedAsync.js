@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
 const faker = require('faker');
-const { productReview } = require('../database/product_reviews.js');
+const { ProductReview } = require('../database/product_reviews.js');
 const connection = require('../database/connection.js');
 
-const deleteAll = async () => { await productReview.deleteMany() };
+const deleteAll = async () => { await ProductReview.deleteMany() };
 
 const products = [
   { name: `HOKA ONE ONE Clifton 7 Road-Running Shoes - Women's`, id: 1, url: 'https://www.rei.com/media/8f078d8a-aa49-4f1e-9c8f-120063bb2042?size=646x485' },
@@ -23,8 +23,8 @@ function randomWord(arr) {
   return arr[Math.floor(Math.random() * arr.length)];
 }
 
-const seedProduct = async () => {
-  const reviews = [];
+const seedProduct = () => {
+  let reviews = [];
 
   for (let i = 0; i < 100; i += 1) {
     const product = randomWord(products);
@@ -53,13 +53,16 @@ const seedProduct = async () => {
     };
     reviews.push(fakeReviews);
   }
-  console.log("reviews: ", reviews);
+
   return reviews;
 };
 
+var reviews = seedProduct()
+console.log("reviews: ", reviews);
+
 const insertReviews = async () => {
-  const seededProduct = seedProduct();
-  await productReview.insertMany(seededProduct);
+  let seededProduct = seedProduct();
+  await ProductReview.insertMany(seededProduct);
 };
 
 const seed = async () => {

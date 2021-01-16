@@ -1,11 +1,17 @@
 import React from 'react';
 
-function Form() {
+function Form({currentReview}) {
   return (
     <div>
-      <h3>My Review for Manduka Cork Yoga Block</h3>
+      <img style={{width: "200px"}}src={currentReview[0].reviews[0].image} />
+      <h2></h2>
+      <h3>My Review for {currentReview[0].reviews[0].productName}</h3>
       <p>Required fields are marked with *</p>
       <h3>Product Rating*</h3>
+      <button type="submit">☆</button>
+      <button type="submit">☆</button>
+      <button type="submit">☆</button>
+      <button type="submit">☆</button>
       <button type="submit">☆</button>
       <h3>Review Title*</h3>
       <input type="text" placeholder="Example: Great on the trails!"></input>

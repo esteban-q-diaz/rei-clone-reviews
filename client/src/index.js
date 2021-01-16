@@ -10,34 +10,78 @@ class App extends React.Component {
   constructor() {
     super();
     this.state = {
+      isLoaded: false,
       // data for all components to use
       fullReviews: [{ name: 'ez' }],
+      currentReview: []
     };
+  }
+
+  componentDidMount() {
+    this.getAllReviews();
   }
 
   /* ----- GET ALL REVIEWS -----*/
   getAllReviews() {
-    axios.get('/getallreviews')
+    axios.get('http://localhost:3000/api/getallreviews')
       .then((res) => {
-        console.log(this.state);
-        console.log(res.data);
+        this.setState({
+          fullReviews: res.data,
+        });
+        this.currentReview();
       })
-      .catch(() => {
-        console.log('error at get all reviews');
+      .catch((err) => {
+        console.log(err);
       });
   }
 
+  currentReview() {
+    const index = Math.floor(Math.random() * 5) + 1;
+    const currentReview = [];
+    const innerFunc = (number) => {
+      this.state.fullReviews.map((item) => {
+        if (item.productId === number) {
+          currentReview.push(item);
+        }
+      });
+    };
+    innerFunc(index);
+    this.setState({
+      isLoaded: true,
+      currentReview: currentReview,
+    });
+
+    console.log(this.state.currentReview)
+  }
+
   render() {
+    const { isLoaded, fullReviews, currentReview } = this.state;
     return (
       // eslint-disable-next-line react/jsx-filename-extension
       <div>
-        <ReviewSummary fullReviews={this.state.fullReviews} />
-        <ReviewList fullReviews={this.state.fullReviews}/>
+      {
+        isLoaded ?
+          <ReviewSummary
+            fullReviews={ fullReviews }
+            fullReviews={ fullReviews }
+            currentReview={ currentReview }
+            />
+        : null
+      }
+        {
+          isLoaded ?
+            <ReviewList
+              fullReviews={ fullReviews }
+              fullReviews={ fullReviews }
+              currentReview={ currentReview }
+              />
+          : null
+        }
       </div>
     );
   }
 }
 
-ReactDOM.render(<div><App /></div>, document.getElementById('root'));
+ReactDOM.render(<App />, document.getElementById('root'));
 
 export default App;

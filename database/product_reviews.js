@@ -7,18 +7,18 @@ const productReviewSchema = new mongoose.Schema({
   productId: Number,
   reviews: [
     {
-      reviewId: { type: Number, required: true, unique: true },
+      reviewId: { type: Number, unique: true },
       productName: String,
       image: String,
-      user: { type: String, required: true },
-      email: { type: String, required: true },
+      user: String,
+      email: String,
       city: String,
       state: String,
       review_total: Number,
-      stars: { type: Number, required: true },
+      stars: Number,
       date: Date,
-      title: { type: String, required: true },
-      description: { type: String, required: true },
+      title: String,
+      description: String,
       yoga_experience: String,
       age: Number,
       recommended: Boolean,
@@ -28,16 +28,16 @@ const productReviewSchema = new mongoose.Schema({
   ],
 });
 
-const productReview = mongoose.model('productReview', productReviewSchema)
+const ProductReview = mongoose.model('productReview', productReviewSchema)
 
 /* -----GET REVIEWS--- */
 
 const getReviews = function (callback) {
-  productReview.find((err) => {
+  ProductReview.find((err, reviews) => {
     if (err) {
-      console.log('err');
+      callback(err);
     } else {
-      console.log('reviews');
+      callback(null, reviews);
     }
   }).limit(12);
 };
@@ -45,7 +45,7 @@ const getReviews = function (callback) {
 /* -----SAVE REVIEW--- */
 
 const saveReview = function () {
-  let sampleReview = new productReview ({
+  const sampleReview = new ProductReview({
     productId: 1,
     reviews: [{
       reviewId: 1, email: 'ez@gmail.com', city: 'san jose', review_total: 10, stars: 5,
@@ -54,13 +54,13 @@ const saveReview = function () {
 
   sampleReview.save((err, review) => {
     if (err) {
-      console.log(err);
+      console.log('err');
     } else {
-      console.log(review);
+      console.log('review');
     }
   });
 };
 
 module.exports = {
-  productReview, getReviews, saveReview,
+  ProductReview, getReviews, saveReview,
 };
