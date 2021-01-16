@@ -5,11 +5,14 @@ const connection = require('./connection.js');
 
 const productReviewSchema = new mongoose.Schema({
   productId: Number,
+  reviewId: { type: Number, unique: true },
+  helpful_count: Number,
+  not_helpful_count: Number,
   reviews: [
     {
-      reviewId: { type: Number, unique: true },
       productName: String,
       image: String,
+      name: String,
       user: String,
       email: String,
       city: String,
@@ -22,8 +25,6 @@ const productReviewSchema = new mongoose.Schema({
       yoga_experience: String,
       age: Number,
       recommended: Boolean,
-      helpful_count: Number,
-      not_helpful_count: Number,
     },
   ],
 });
@@ -61,6 +62,18 @@ const saveReview = function () {
   });
 };
 
+/* -----HELPFUL BUTON COUNT-- */
+
+const helpfulButtonCount = function (param, callback) {
+  ProductReview.findOneAndUpdate({reviewId: param[0]}, {helpful_count: param[1]++}, (err, review) => {
+    if (err) {
+      callback(err)
+    } else {
+      callback(null, review)
+    }
+  })
+}
+
 module.exports = {
-  ProductReview, getReviews, saveReview,
+  ProductReview, getReviews, saveReview, helpfulButtonCount,
 };
