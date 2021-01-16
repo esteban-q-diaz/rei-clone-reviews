@@ -1,6 +1,7 @@
 import React from 'react';
 import UserDetails from './UserDetails.jsx'
 import ReviewDetails from './ReviewDetails.jsx';
+import axios from 'axios'
 
 class ReviewList extends React.Component {
   constructor(props) {
@@ -12,8 +13,10 @@ class ReviewList extends React.Component {
   }
 
   componentDidMount() {
-    console.log("this", this.props.currentReview);
+    console.log("this", this.state.currentReview);
   }
+
+
 
   render() {
     const { currentReview } = this.state;

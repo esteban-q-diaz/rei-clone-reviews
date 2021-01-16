@@ -36,15 +36,14 @@ app.get('/api/getallreviews', (req, res) => {
 
 /* -----HELPFUL BUTON COUNT-- */
 
-app.post('/api/helpfulbutton', (req, res) => {
+app.put('/api/helpful', (req, res) => {
   const reviewId = req.body.reviewId;
-  const currentHelpCount = req.body.help
-  console.log("revId", reviewId, currentHelpCount)
 
-  mongo.helpfulButtonCount([reviewId, currentHelpCount], (err, data)=>{
+  mongo.helpfulCount([reviewId], (err, data) => {
     if (err) {
       res.send(err);
     } else {
+      console.log('helpful count updated');
       res.status(202).send(data);
     }
   });

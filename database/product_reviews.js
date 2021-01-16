@@ -62,18 +62,20 @@ const saveReview = function () {
   });
 };
 
+// { $inc: { views: 1 } }, {new: true }
+
 /* -----HELPFUL BUTON COUNT-- */
 
-const helpfulButtonCount = function (param, callback) {
-  ProductReview.findOneAndUpdate({reviewId: param[0]}, {helpful_count: param[1]++}, (err, review) => {
+const helpfulCount = function (param, callback) {
+  ProductReview.findOneAndUpdate({reviewId: param[0]}, { $inc: { helpful_count: 1 } }, {new: true }, (err, review) => {
     if (err) {
-      callback(err)
+      console.log('err', review, param[0]);
     } else {
-      callback(null, review)
+      callback(null, review);
     }
-  })
-}
+  });
+};
 
 module.exports = {
-  ProductReview, getReviews, saveReview, helpfulButtonCount,
+  ProductReview, getReviews, saveReview, helpfulCount,
 };

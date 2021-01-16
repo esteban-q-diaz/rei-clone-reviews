@@ -40,33 +40,48 @@ class App extends React.Component {
 
   /* ----- GET REIVEWS FOR ONE ITEM -----*/
   getItemReviews() {
+    const { fullReviews, currentReview } = this.state;
     const index = Math.floor(Math.random() * 5) + 1;
-    const currentReview = [];
+    const currentReviews = [];
     this.setState({
       isLoaded: false,
     });
     const innerFunc = (number) => {
-      this.state.fullReviews.map((item) => {
+      // eslint-disable-next-line array-callback-return
+      fullReviews.map((item) => {
         if (item.productId === number) {
-          currentReview.push(item);
+          currentReviews.push(item);
         }
       });
     };
     innerFunc(index);
     this.setState({
       isLoaded: true,
-      currentReview: currentReview,
+      currentReview: currentReviews,
     });
 
-    console.log("current review in index.js", this.state.currentReview)
-    return index;
+    console.log('current review in index.js', currentReview);
   }
 
   /* ----- HELPFUL CLICK  -----*/
 
   onHelpfulClick(e, type, reviewId) {
     e.preventDefault();
-    console.log("click worked", type, reviewId, this.state);
+    console.log('click worked', type, reviewId, this.state);
+    if (type === 'yes') {
+      axios.put('http://localhost:3000/api/helpful', {reviewId: reviewId})
+        .then((res) => {
+          console.log('response', res.data);
+          this.getAllReviews();
+        })
+        .catch((err) =>{ console.log(err)
+        });
+    }
+    if (type === 'no') {
+      axios.put('http://localhost:3000/api/nothelpful', {reviewId: reviewId})
+        .then((res) => console.log('response'))
+        .catch((err) => console.log('error at axios put - no'));
+    }
   }
 
   render() {
