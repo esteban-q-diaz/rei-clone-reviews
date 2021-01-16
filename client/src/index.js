@@ -38,6 +38,9 @@ class App extends React.Component {
   currentReview() {
     const index = Math.floor(Math.random() * 5) + 1;
     const currentReview = [];
+    this.setState({
+      isLoaded: false,
+    });
     const innerFunc = (number) => {
       this.state.fullReviews.map((item) => {
         if (item.productId === number) {
@@ -74,6 +77,7 @@ class App extends React.Component {
               fullReviews={ fullReviews }
               fullReviews={ fullReviews }
               currentReview={ currentReview }
+              getAllReviews={this.getAllReviews.bind(this)}
               />
           : null
         }

@@ -1,6 +1,6 @@
 import React from 'react';
 import UserDetails from './UserDetails.jsx'
-import ReviewDetails from './ReviewDetails.jsx'
+import ReviewDetails from './ReviewDetails.jsx';
 
 class ReviewList extends React.Component {
   constructor(props) {
@@ -16,10 +16,17 @@ class ReviewList extends React.Component {
   }
 
   render() {
+    const { currentReview } = this.state;
     return (
       <div>
-        <UserDetails />
-        <ReviewDetails />
+        <h2> START OF REVIEW LIST </h2>
+        <UserDetails
+          currentReview={currentReview}
+        />
+        <ReviewDetails
+          currentReview={currentReview}
+          getAllReviews={this.props.getAllReviews}
+        />
       </div>
     );
   }

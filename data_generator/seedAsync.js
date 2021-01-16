@@ -30,11 +30,14 @@ const seedProduct = () => {
     const product = randomWord(products);
     let fakeReviews = {
       productId: product.id,
+      reviewId: faker.random.number({ min: 1000000, max: 9999999 }),
+      helpful_count: 0,
+      not_helpful_count: 0,
       reviews: [
         {
-          reviewId: faker.random.number({ min: 1000000, max: 9999999 }),
           productName: product.name,
           image: product.url,
+          name: faker.name.findName(),
           user: faker.internet.userName(),
           email: faker.internet.email(),
           city: faker.address.city(),
@@ -46,8 +49,6 @@ const seedProduct = () => {
           description: `${randomWord(adjectives)} ${randomWord(adjectives)}  ${randomWord(nouns)} ${randomWord(nouns)}  ${randomWord(pronouns)} ${randomWord(articles)} ${randomWord(adjectives)} ${randomWord(verbs)}`,
           age: Math.floor(Math.random() * 75) + 17,
           recommended: faker.random.boolean(),
-          helpful_count: 0,
-          not_helpful_count: 0,
         },
       ],
     };
@@ -58,7 +59,7 @@ const seedProduct = () => {
 };
 
 var reviews = seedProduct()
-console.log("reviews: ", reviews);
+// console.log("reviews: ", reviews);
 
 const insertReviews = async () => {
   let seededProduct = seedProduct();

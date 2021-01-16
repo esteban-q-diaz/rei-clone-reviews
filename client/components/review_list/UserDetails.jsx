@@ -1,11 +1,12 @@
 import React from 'react';
+import UserDetailsItems from './UserDetailsItems.jsx';
 
-function UserDetails () {
+function UserDetails ( { currentReview }) {
   return (
     <div>
-      <h2>Manuel P in Royal Oak MI</h2>
-      <p>Royal Oak, MI</p>
-      <p>Review 1</p>
+      {currentReview.map((reviews, index)=>{
+        return <UserDetailsItems currentReview={reviews} key={index}/>
+      })}
     </div>
   )
 }
