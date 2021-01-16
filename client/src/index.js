@@ -13,8 +13,10 @@ class App extends React.Component {
       isLoaded: false,
       // data for all components to use
       fullReviews: [{ name: 'ez' }],
-      currentReview: []
+      currentReview: [],
     };
+    this.getItemReviews = this.getItemReviews.bind(this);
+    this.onHelpfulClick = this.onHelpfulClick.bind(this);
   }
 
   componentDidMount() {
@@ -22,20 +24,22 @@ class App extends React.Component {
   }
 
   /* ----- GET ALL REVIEWS -----*/
+  // eslint-disable-next-line react/sort-comp
   getAllReviews() {
     axios.get('http://localhost:3000/api/getallreviews')
       .then((res) => {
         this.setState({
           fullReviews: res.data,
         });
-        this.currentReview();
+        this.getItemReviews();
       })
       .catch((err) => {
         console.log(err);
       });
   }
 
-  currentReview() {
+  /* ----- GET REIVEWS FOR ONE ITEM -----*/
+  getItemReviews() {
     const index = Math.floor(Math.random() * 5) + 1;
     const currentReview = [];
     this.setState({
@@ -54,7 +58,15 @@ class App extends React.Component {
       currentReview: currentReview,
     });
 
-    console.log(this.state.currentReview)
+    console.log("current review in index.js", this.state.currentReview)
+    return index;
+  }
+
+  /* ----- HELPFUL CLICK  -----*/
+
+  onHelpfulClick(e, type, reviewId) {
+    e.preventDefault();
+    console.log("click worked", type, reviewId, this.state);
   }
 
   render() {
@@ -62,24 +74,25 @@ class App extends React.Component {
     return (
       // eslint-disable-next-line react/jsx-filename-extension
       <div>
-      {
-        isLoaded ?
-          <ReviewSummary
-            fullReviews={ fullReviews }
-            fullReviews={ fullReviews }
-            currentReview={ currentReview }
-            />
-        : null
-      }
         {
-          isLoaded ?
+          isLoaded ? (
+            <ReviewSummary
+              fullReviews={fullReviews}
+              currentReview={currentReview}
+            />
+          )
+            : null
+        }
+        {
+          isLoaded ? (
             <ReviewList
-              fullReviews={ fullReviews }
-              fullReviews={ fullReviews }
-              currentReview={ currentReview }
-              getAllReviews={this.getAllReviews.bind(this)}
-              />
-          : null
+              fullReviews={fullReviews}
+              currentReview={currentReview}
+              getAllReviews={this.getAllReviews}
+              onHelpfulClick={this.onHelpfulClick}
+            />
+          )
+            : null
         }
       </div>
     );

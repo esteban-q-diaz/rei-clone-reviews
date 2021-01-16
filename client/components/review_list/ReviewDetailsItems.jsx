@@ -1,25 +1,15 @@
-import React, { useState } from 'react';
-import axios from 'axios';
+import React from 'react';
 
-function ReviewDetailsItems({ currentReview, getAllReviews }) {
-
-  const [yesCount, setYesCount] = useState(0);
-  function addYesCount() {
-    axios.post('http://localhost:3000/api/helpfulbutton', {reviewId: currentReview.reviewId, help: currentReview.helpful_count})
-      .then(res=> getAllReviews())
-      .catch(err=> console.log('err'))
-  }
-
-  const [noCount, setNoCount] = useState(0);
-  function addNoCount() {
-
-  }
-
+function ReviewDetailsItems({ currentReview, getAllReviews, onHelpfulClick }) {
   return (
     <div>
-      {console.log("revew:", currentReview)}
+      {console.log('revew:', currentReview)}
       <h2>☆ ☆ ☆ ☆ ☆ </h2>
-      <h3>{currentReview.reviews[0].stars} stars</h3>
+      <h3>
+        {/* eslint-disable-next-line react/prop-types */}
+        {currentReview.reviews[0].stars}
+        stars
+      </h3>
       <p>{currentReview.reviews[0].date}</p>
       <p>11 days ago</p>
       <h2>{currentReview.reviews[0].title}</h2>
@@ -28,17 +18,21 @@ function ReviewDetailsItems({ currentReview, getAllReviews }) {
       <p>Beginner</p>
       <h2>Age</h2>
       <p>55-54</p>
-      <h2>{currentReview.reviews[0].recommended ?`Yes,` : `No,`}</h2>
-      <p>{currentReview.reviews[0].recommended ?`I recommend this product.` : `I do not recommend this product.`}</p>
+      <h2>{currentReview.reviews[0].recommended ? 'Yes,' : 'No,'}</h2>
+      <p>{currentReview.reviews[0].recommended ? 'I recommend this product.' : 'I do not recommend this product.'}</p>
       <p>Helpful?</p>
-      <button onClick={addYesCount}>Yes - {currentReview.helpful_count}</button>
-      <button>No - {currentReview.not_helpful_count}</button>
+      <button type="submit" onClick={(e) => { onHelpfulClick(e, 'yes', currentReview.reviewId); }}>
+        Yes - {currentReview.helpful_count}
+      </button>
+      <button type="submit" onClick={(e) => { onHelpfulClick(e, 'no', currentReview.reviewId); }}>
+        No - {currentReview.not_helpful_count}
+      </button>
       <button>Report as inappropriate</button>
     </div>
   );
 }
 
-export default ReviewDetailsItems
+export default ReviewDetailsItems;
 
 // import React from 'react';
 
@@ -67,3 +61,17 @@ export default ReviewDetailsItems
 // }
 
 // export default ReviewDetailsItems
+
+
+
+// const [yesCount, setYesCount] = useState(0);
+// function addYesCount() {
+//   axios.post('http://localhost:3000/api/helpfulbutton', {reviewId: currentReview.reviewId, help: currentReview.helpful_count})
+//     .then(res=> getAllReviews())
+//     .catch(err=> console.log('err'))
+// }
+
+// const [noCount, setNoCount] = useState(0);
+// function addNoCount() {
+
+// }

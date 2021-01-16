@@ -17,6 +17,7 @@ class ReviewList extends React.Component {
 
   render() {
     const { currentReview } = this.state;
+    const { getAllReviews, onHelpfulClick } = this.props;
     return (
       <div>
         <h2> START OF REVIEW LIST </h2>
@@ -25,7 +26,8 @@ class ReviewList extends React.Component {
         />
         <ReviewDetails
           currentReview={currentReview}
-          getAllReviews={this.props.getAllReviews}
+          getAllReviews={getAllReviews}
+          onHelpfulClick={onHelpfulClick}
         />
       </div>
     );
