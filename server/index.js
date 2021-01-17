@@ -25,8 +25,7 @@ app.get('/api/getallreviews', (req, res) => {
 
 app.get('/api/getitemreviews/:id', (req, res) => {
   const id = req.params.id;
-  console.log("reqqqq", req.params);
-  mongo.getItemReviews([ id ], (err, reviews) => {
+  mongo.getItemReviews([id], (err, reviews) => {
     if (err) {
       res.send(err);
     } else {

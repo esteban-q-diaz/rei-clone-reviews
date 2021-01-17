@@ -1,8 +1,10 @@
 import React from 'react';
 
-function Form({currentReview}) {
+function Form({currentReview, closeForm}) {
   return (
     <div>
+      {console.log("FORMMMMcurrent review", currentReview)}
+      <h3 onClick={closeForm}>X</h3>
       <img style={{width: "200px"}}src={currentReview[0].reviews[0].image} />
       <h2></h2>
       <h3>My Review for {currentReview[0].reviews[0].productName}</h3>

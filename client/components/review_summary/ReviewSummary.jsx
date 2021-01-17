@@ -2,34 +2,71 @@ import React from 'react';
 // eslint-disable-next-line import/extensions
 import ReviewListHeader from './ReviewListHeader.jsx';
 // eslint-disable-next-line import/extensions
-import ReviewButton from './ReviewButton.jsx';
-// eslint-disable-next-line import/extensions
-import Form from './Form.jsx';
+// import Form from './Form.jsx';
 // eslint-disable-next-line import/extensions
 import ReviewSnapshot from './ReviewSnapshot.jsx';
 // eslint-disable-next-line import/extensions
 import AverageRatings from './AverageRatings.jsx';
+import Form from './Form.jsx'
+import axios from 'axios';
 
 class ReviewSummary extends React.Component {
   constructor(props) {
     super();
     this.state = {
       isLoaded: false,
-      fullReviews: props.fullReviews,
-      currentReview: props.currentReview,
+      fullReviews: [],
+      currentReview: [],
       ratingsCount: {
         one: 0, two: 0, three: 0, four: 0, five: 0,
       },
       averageRatings: 0,
     };
+    this.formClick = this.formClick.bind(this);
+    this.sortRatings = this.sortRatings.bind(this);
   }
 
   componentDidMount() {
-    const { currentReview } = this.props;
-    console.log('"this"', currentReview);
-    this.countRatings();
+    console.log("review summary current", this.props.currentItem);
+    this.getAllReviews();
   }
 
+  /* ----- GET ALL REVIEWS -----*/
+  // eslint-disable-next-line react/sort-comp
+  getAllReviews() {
+    axios.get('http://localhost:3000/api/getallreviews')
+      .then((res) => {
+        this.setState({
+          fullReviews: res.data,
+        });
+        this.getItemReviews();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
+  /* ----- GET REIVEWS FOR ONE ITEM -----*/
+  getItemReviews() {
+    axios.get(`http://localhost:3000/api/getitemreviews/${this.props.currentItem}`)
+      .then((res) => {
+        this.setState({
+          currentReview: res.data,
+        });
+        this.countRatings();
+      })
+      .catch((err) => {
+        console.log('error at get item reviews');
+      });
+  }
+  /* ----- FORM CLICK -----*/
+  formClick(e) {
+    e.preventDefault()
+    console.log('form clicked')
+  }
+
+
+  /* ----- GET REIVEWS FOR ONE ITEM -----*/
   countRatings() {
     const { currentReview, ratingsCount } = this.state;
     let occur = 0;
@@ -69,26 +106,71 @@ class ReviewSummary extends React.Component {
     });
   }
 
+  sortRatings(e, star){
+    const {currentReview} = this.state
+    e.preventDefault()
+    var sortedReviews = [];
+    currentReview.map((singleReview)=>{
+      singleReview.reviews.map((items) => {
+        if(star === 5 && items.stars === 5) {
+          sortedReviews.push(singleReview)
+        }
+        if(star === 4 && items.stars === 4) {
+          sortedReviews.push(singleReview)
+        }
+        if(star === 3 && items.stars === 3) {
+          sortedReviews.push(singleReview)
+        }
+        if(star === 2 && items.stars === 2) {
+          sortedReviews.push(singleReview)
+        }
+        if(star === 1 && items.stars === 1) {
+          sortedReviews.push(singleReview)
+        }
+      })
+    })
+    this.setState({
+      currentReview: sortedReviews
+    })
+    console.log("sorted", sortedReviews)
+  }
+
   render() {
-    const { isLoaded, currentReview, ratingsCount } = this.state;
+    const { isLoaded, currentReview, ratingsCount, averageRatings } = this.state;
     return (
       <div>
-        {/* <Form currentReview={currentReview}/> */}
-        <ReviewListHeader />
-        <ReviewButton />
+        <h2> START OF REVIEW SUMMRARY </h2>
+
+        {/* {
+          isLoaded ? (
+            <Form currentReview={currentReview}/>
+          )
+            : null
+        } */}
+
         {
-          isLoaded ?
+          isLoaded ? (
+            <ReviewListHeader formClick={this.formClick} currentReview={currentReview}/>
+          )
+            : null
+        }
+        {
+          isLoaded ? (
             <ReviewSnapshot
               ratingsCount={ratingsCount}
+              sortRatings={this.sortRatings}
             />
-        : null
-      }
-      {
-          isLoaded ?
-            <AverageRatings
-            averageRatings={this.state.averageRatings}
-            />
-        : null
+          )
+            : null
+        }
+        {
+          isLoaded
+            ? (
+              <AverageRatings
+                averageRatings={averageRatings}
+              />
+            )
+            : null
       }
       </div>
     );
