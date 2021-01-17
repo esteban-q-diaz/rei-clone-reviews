@@ -4,6 +4,8 @@ import Form from './Form.jsx';
 function ReviewListHeader({formClick, currentReview}) {
   const [clicked, setClick] = useState(false);
 
+  console.log('current from header', currentReview)
+
   function manageClick(e) {
     e.preventDefault()
     console.log('clickeed')

@@ -2,7 +2,7 @@ import React from 'react';
 import Filters from './Filters.jsx';
 import AverageRatings from './AverageRatings.jsx';
 
-function ReviewSnapshot( { ratingsCount, sortRatings }) {
+function ReviewSnapshot( { ratingsCount, sortRatings, averageRatings, currentReview }) {
   return (
     <div>
       <p>Rating Snapshot{"ratings count:", console.log(ratingsCount)}</p>
@@ -12,8 +12,8 @@ function ReviewSnapshot( { ratingsCount, sortRatings }) {
       <p onClick={(e) => {sortRatings(e, 3)}}>3☆ {ratingsCount.three}</p>
       <p onClick={(e) => {sortRatings(e, 2)}}>2☆ {ratingsCount.two}</p>
       <p onClick={(e) => {sortRatings(e, 1)}}>1☆ {ratingsCount.one}</p>
-      <Filters />
-      <AverageRatings />
+      <Filters currentReview={currentReview}/>
+      <AverageRatings averageRatings={averageRatings} />
     </div>
   );
 }

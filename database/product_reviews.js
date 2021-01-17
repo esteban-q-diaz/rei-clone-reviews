@@ -40,7 +40,7 @@ const getReviews = function (callback) {
     } else {
       callback(null, reviews);
     }
-  }).limit(12);
+  }).limit(100);
 };
 
 /* ----- GET CERTAIN ITEM REVIEWS --- */
@@ -53,7 +53,7 @@ const getItemReviews = function (id, callback) {
     } else {
       callback(null, reviews);
     }
-  }).limit(12);
+  }).limit(100);
 };
 
 
