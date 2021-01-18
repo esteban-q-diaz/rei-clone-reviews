@@ -16,9 +16,9 @@ function Form({currentReview, closeForm}) {
       <button type="submit">☆</button>
       <button type="submit">☆</button>
       <h3>Review Title*</h3>
-      <input type="text" placeholder="Example: Great on the trails!"></input>
+      <input type="text" placeholder="Example: Great on the trails!" onChange={(e)=>{console.log(e.target.value)}}></input>
       <h3>Review*</h3>
-      <input type="text" placeholder="Please keep your review focused on the product and your experience with it. Your review is so important for improving REI and the experience for other REI shoppers!"></input>
+      <input type="text" placeholder="Please keep your review focused on the product and your experience with it. Your review is so important for improving REI and the experience for other REI shoppers!" onChange={(e)=>{console.log(e.target.value)}}></input>
       <button type="submit">Add photo</button>
       <button type="submit"> Add video</button>
       <h3>Would you recommend this product to a friend</h3>
@@ -38,11 +38,11 @@ function Form({currentReview, closeForm}) {
       </select>
       <h3>Experience</h3>
       <h3>Nickname*</h3>
-      <input type="text" placeholder="Example: jackie27"></input>
+      <input type="text" placeholder="Example: jackie27" onChange={(e)=>{console.log(e.target.value)}}></input>
       <h3>Location*</h3>
-      <input type="text" placeholder="Example: Seattle, WA"></input>
+      <input type="text" placeholder="Example: Seattle, WA" onChange={(e)=>{console.log(e.target.value)}}></input>
       <h3>Email*</h3>
-      <input type="text" placeholder="Example: Seattle, WA"></input>
+      <input type="email" placeholder="Example: Seattle@washington.com"  onChange={(e)=>{console.log(e.target.value)}} required></input>
       <p>I agree to the terms & conditions</p>
       <p>You may receive emails regarding this submission. Any emails will include the ability to opt out of future communications.</p>
       <button type="submit"> Post review</button>

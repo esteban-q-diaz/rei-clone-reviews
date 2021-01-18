@@ -10,7 +10,7 @@ import ClearFilters from './filters/ClearFilters.jsx';
 
 
 
-function ReviewSnapshot( { ratingsCount, sortRatings, averageRatings, currentReview, fiveFilter, fourFilter, threeFilter,  twoFilter, oneFilter, clear, closeFilterClick}) {
+function ReviewSnapshot( { ratingsCount, sortRatings, averageRatings, currentReview, fiveFilter, fourFilter, threeFilter,  twoFilter, oneFilter, clear, closeFilterClick, filterClick}) {
   return (
     <div>
       <p>
@@ -86,7 +86,10 @@ function ReviewSnapshot( { ratingsCount, sortRatings, averageRatings, currentRev
         }
 
 
-      <Filters currentReview={currentReview}/>
+      <Filters
+        currentReview={currentReview}
+        filterClick={filterClick}
+      />
       <AverageRatings averageRatings={averageRatings} />
     </div>
   );

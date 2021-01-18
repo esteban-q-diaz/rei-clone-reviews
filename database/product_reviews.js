@@ -19,7 +19,8 @@ const productReviewSchema = new mongoose.Schema({
       state: String,
       review_total: Number,
       stars: Number,
-      date: Date,
+      date: {type: String, default: Date},
+      realDate: Date,
       title: String,
       description: String,
       yoga_experience: String,
@@ -29,7 +30,9 @@ const productReviewSchema = new mongoose.Schema({
   ],
 });
 
-const ProductReview = mongoose.model('productReview', productReviewSchema)
+const ProductReview = mongoose.model('productReview', productReviewSchema);
+
+let currentProductId;
 
 /* -----GET REVIEWS--- */
 
@@ -45,16 +48,29 @@ const getReviews = function (callback) {
 
 /* ----- GET CERTAIN ITEM REVIEWS --- */
 
-const getItemReviews = function (id, callback) {
+const getItemReviews = async function (id, callback) {
   var productId = Number(id[0]);
-  ProductReview.find({productId: productId}, (err, reviews) => {
-    if (err) {
-      callback(err);
-    } else {
-      callback(null, reviews);
-    }
-  }).limit(100);
+  this.currentProductId = productId;
+  try {
+    const results = await ProductReview.find({productId: productId}).sort('reviews.date').limit(100);
+    callback(null, results);
+  }
+  catch {
+    console.log('error');
+  }
 };
+
+
+
+  // var productId = Number(id[0]);
+  // ProductReview.find({productId: productId}, (err, reviews) => {
+  //   if (err) {
+  //     callback(err);
+  //   } else {
+  //     callback(null, reviews);
+  //   }
+  // }).limit(100);
+// };
 
 
 /* -----SAVE REVIEW--- */
@@ -102,6 +118,62 @@ const notHelpfulCount = function (param, callback) {
   });
 };
 
+const sortMostRevent = async function(callback) {
+  // refactor this
+    try {
+      const results = await ProductReview.find({productId: this.currentProductId}).sort('reviews.date').limit(50);
+      callback(null, results);
+    }
+    catch {
+      console.log('error');
+    }
+}
+
+const highToLow = async function(callback) {
+  // refactor this
+    try {
+      const results = await ProductReview.find({productId: this.currentProductId}).sort({'reviews.stars': -1}).limit(50);
+      callback(null, results);
+    }
+    catch {
+      console.log('error');
+    }
+}
+
+const lowToHigh = async function(callback) {
+  // refactor this
+    try {
+      const results = await ProductReview.find({productId: this.currentProductId}).sort({'reviews.stars': 1}).limit(50);
+      callback(null, results);
+    }
+    catch {
+      console.log('error');
+    }
+}
+
+const mostHelpful = async function(callback) {
+  // refactor this
+    try {
+      const results = await ProductReview.find({productId: this.currentProductId}).sort({'helpful_count': -1}).limit(50);
+      callback(null, results);
+    }
+    catch {
+      console.log('error');
+    }
+}
+
+const mostRelevant = async function(callback) {
+  // refactor this
+    try {
+      const results = await ProductReview.find({productId: this.currentProductId}).sort({'reviews.review_total': -1}).limit(50);
+      callback(null, results);
+    }
+    catch {
+      console.log('error');
+    }
+}
+
+
 module.exports = {
-  ProductReview, getReviews, saveReview, helpfulCount, getItemReviews, notHelpfulCount,
+  ProductReview, getReviews, saveReview, helpfulCount, getItemReviews, notHelpfulCount, sortMostRevent, highToLow, lowToHigh, mostHelpful, mostRelevant,
 };

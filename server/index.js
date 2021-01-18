@@ -77,14 +77,75 @@ app.put('/api/nothelpful', (req, res) => {
   });
 });
 
-// app.post('/api/loadmore', (req, res) => {
+/* ----- SORT BY MORE RECENT --- */
 
-// });
+app.get('/api/mostrecent', (req, res) => {
 
-// app.post('/api/sort', (req, res) => {
+  // mongo.sortMostRevent()
+  mongo.sortMostRevent((err, reviews) => {
+    if (err) {
+      res.send(err);
+    } else {
+      res.send(reviews)
+    }
+  });
+});
 
-// });
+/* ----- SORT BY H2L RECENT --- */
 
+app.get('/api/hightolow', (req, res) => {
+
+  // mongo.sortMostRevent()
+  mongo.highToLow((err, reviews) => {
+    if (err) {
+      res.send(err);
+    } else {
+      res.send(reviews)
+    }
+  });
+});
+
+/* ----- SORT BY L2H RECENT --- */
+
+app.get('/api/lowtohigh', (req, res) => {
+
+  // mongo.sortMostRevent()
+  mongo.lowToHigh((err, reviews) => {
+    if (err) {
+      res.send(err);
+    } else {
+      res.send(reviews)
+    }
+  });
+});
+
+/* ----- SORT BY MOST HELPFUL --- */
+
+app.get('/api/mosthelpful', (req, res) => {
+
+  // mongo.sortMostRevent()
+  mongo.mostHelpful((err, reviews) => {
+    if (err) {
+      res.send(err);
+    } else {
+      res.send(reviews)
+    }
+  });
+});
+
+/* ----- SORT BY MOST RELEVANT --- */
+
+app.get('/api/mostrelevant', (req, res) => {
+
+  // mongo.sortMostRevent()
+  mongo.mostRelevant((err, reviews) => {
+    if (err) {
+      res.send(err);
+    } else {
+      res.send(reviews)
+    }
+  });
+});
 app.listen(PORT, (err) => {
   if (err) {
     console.log('err');

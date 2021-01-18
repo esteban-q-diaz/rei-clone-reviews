@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const faker = require('faker');
 const { ProductReview } = require('../database/product_reviews.js');
 const connection = require('../database/connection.js');
+const moment = require('moment')
 
 const deleteAll = async () => { await ProductReview.deleteMany() };
 
@@ -28,6 +29,14 @@ const seedProduct = () => {
 
   for (let i = 0; i < 100; i += 1) {
     const product = randomWord(products);
+    const newDate = new Date(faker.date.past(5));
+    // var d = newDate.getDate();
+    // var m = newDate.getMonth();
+    // console.log(m, d)
+    const year = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(newDate);
+    const month = new Intl.DateTimeFormat('en', { month: 'short' }).format(newDate);
+    const date = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(newDate);
+    const dateFormat = `${date}-${month}-${year}`;
     let fakeReviews = {
       productId: product.id,
       reviewId: faker.random.number({ min: 1000000, max: 9999999 }),
@@ -44,7 +53,8 @@ const seedProduct = () => {
           state: faker.address.state(),
           review_total: faker.random.number({ min: 1, max: 12 }),
           stars: faker.random.number({ min: 1, max: 5 }),
-          date: faker.date.past(5),
+          date: moment(newDate).fromNow(),
+          realDate: newDate,
           title: faker.random.words(5),
           description: `${randomWord(adjectives)} ${randomWord(adjectives)}  ${randomWord(nouns)} ${randomWord(nouns)}  ${randomWord(pronouns)} ${randomWord(articles)} ${randomWord(adjectives)} ${randomWord(verbs)}`,
           age: Math.floor(Math.random() * 75) + 17,

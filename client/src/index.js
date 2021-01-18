@@ -41,6 +41,7 @@ class App extends React.Component {
     this.sortRatings = this.sortRatings.bind(this);
     this.onHelpfulClick = this.onHelpfulClick.bind(this);
     this.closeFilterClick = this.closeFilterClick.bind(this);
+    this.filterClick = this.filterClick.bind(this);
   }
 
   componentDidMount() {
@@ -263,6 +264,7 @@ class App extends React.Component {
         this.getAllReviews();
       }
     }
+    // refactor this here
     if (num === 'clear' || twoFilter === false && threeFilter === false && fourFilter === false && fiveFilter === false) {
       this.setState({
         fiveFilter: false,
@@ -282,16 +284,68 @@ class App extends React.Component {
     this.sortRatings(e);
   }
 
-
-
-  // this.setState({
-  //   fiveFilter: false,
-  //   fourFilter: false,
-  //   threeFilter: false,
-  //   twoFilter: false,
-  //   oneFilter: false,
-  //   clear: false,
-  // });
+  filterClick(e) {
+    e.preventDefault()
+    console.log('filter clicked', e.target.value)
+    if (e.target.value === 'mostRecent') {
+      axios.get(`http://localhost:3000/api/mostrecent`)
+      .then((res) => {
+        console.log('filter clicked successs', res.data)
+        this.setState({
+          currentReview: res.data,
+        });
+      })
+      .catch((err) => {
+        console.log('error at get most recent');
+      });
+    }
+    if (e.target.value === 'highToLow') {
+      axios.get(`http://localhost:3000/api/hightolow`)
+      .then((res) => {
+        this.setState({
+          currentReview: res.data,
+        });
+      })
+      .catch((err) => {
+        console.log('error at get most recent');
+      });
+    }
+    if (e.target.value === 'lowToHigh') {
+      axios.get(`http://localhost:3000/api/lowtohigh`)
+      .then((res) => {
+        console.log('filter l2hclicked successs', res.data);
+        this.setState({
+          currentReview: res.data,
+        });
+      })
+      .catch((err) => {
+        console.log('error at get most recent');
+      });
+    }
+    if (e.target.value === 'mostHelpful') {
+      axios.get(`http://localhost:3000/api/mosthelpful`)
+      .then((res) => {
+        this.setState({
+          currentReview: res.data,
+        });
+      })
+      .catch((err) => {
+        console.log('error at get most recent');
+      });
+    }
+    if (e.target.value === 'mostRelevant') {
+      axios.get(`http://localhost:3000/api/mostrelevant`)
+      .then((res) => {
+        console.log('filter most relevant clicked successs', res.data);
+        this.setState({
+          currentReview: res.data,
+        });
+      })
+      .catch((err) => {
+        console.log('error at get most recent');
+      });
+    }
+  }
 
 
   /* -----HELPFUL BUTON COUNT-- */
@@ -345,6 +399,7 @@ class App extends React.Component {
               oneFilter={oneFilter}
               clear={clear}
               closeFilterClick={this.closeFilterClick}
+              filterClick={this.filterClick}
             />
           )
             : null

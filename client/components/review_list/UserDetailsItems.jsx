@@ -16,7 +16,6 @@ function UserDetailsItems({ currentReview, onHelpfulClick }) {
         stars
       </h3>
       <p>{currentReview.reviews[0].date}</p>
-      <p>11 days ago</p>
       <h2>{currentReview.reviews[0].title}</h2>
       <p>{currentReview.reviews[0].description}.</p>
       {/* <h2>Yoga Experience</h2> */}
