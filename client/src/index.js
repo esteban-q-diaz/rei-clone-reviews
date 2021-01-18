@@ -1,9 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
+// eslint-disable-next-line import/extensions
 import ReviewListHeader from '../components/review_summary/ReviewListHeader.jsx';
+// eslint-disable-next-line import/extensions
 import AverageRatings from '../components/review_summary/AverageRatings.jsx';
+// eslint-disable-next-line import/extensions
 import UserDetails from '../components/review_list/UserDetails.jsx';
+// eslint-disable-next-line import/extensions
 import ReviewSnapshot from '../components/review_summary/ReviewSnapshot.jsx';
 // import Form from './Form.jsx'
 
@@ -15,19 +19,34 @@ class App extends React.Component {
       count: false,
       fullReviews: [],
       currentReview: [],
+      currentReviewTwo: [],
       ratingsCount: {
         one: 0, two: 0, three: 0, four: 0, five: 0,
       },
       averageRatings: 0,
       currentItem: '',
+      fiveFilter: false,
+      fourFilter: false,
+      threeFilter: false,
+      twoFilter: false,
+      oneFilter: false,
+      clear: false,
+      fiveStarReviews: [],
+      fourStarReviews: [],
+      threeStarReviews: [],
+      twoStarReviews: [],
+      oneStarReviews: [],
     };
     this.formClick = this.formClick.bind(this);
     this.sortRatings = this.sortRatings.bind(this);
     this.onHelpfulClick = this.onHelpfulClick.bind(this);
+    this.closeFilterClick = this.closeFilterClick.bind(this);
   }
 
   componentDidMount() {
-    console.log('review summary current', this.props.currentItem);
+    // eslint-disable-next-line react/prop-types
+    const { currentItem } = this.props;
+    console.log('review summary current',currentItem);
     this.getAllReviews();
   }
 
@@ -54,6 +73,7 @@ class App extends React.Component {
         this.setState({
           currentItem: index,
           currentReview: res.data,
+          currentReviewTwo: res.data,
         });
         if (this.state.count === false) {
           console.log('i am herrrrrrreee')
@@ -126,34 +146,153 @@ class App extends React.Component {
   }
 
   sortRatings(e, star) {
-    const { currentReview, fullReviews } = this.state;
+    const { fullReviews } = this.state;
     e.preventDefault();
-
     const sortedReviews = [];
     fullReviews.map((singleReview) => {
       singleReview.reviews.map((items) => {
         if (star === 5 && singleReview.productId === this.state.currentItem && items.stars === 5) {
           sortedReviews.push(singleReview);
+          this.setState({
+            fiveStarReviews: sortedReviews,
+            fiveFilter: true,
+            clear: true,
+          });
         }
         if (star === 4 && singleReview.productId === this.state.currentItem && items.stars === 4) {
           sortedReviews.push(singleReview);
+          this.setState({
+            fourStarReviews: sortedReviews,
+            fourFilter: true,
+            clear: true,
+          })
         }
         if (star === 3 && singleReview.productId === this.state.currentItem && items.stars === 3) {
           sortedReviews.push(singleReview);
+          this.setState({
+            threeStarReviews: sortedReviews,
+            threeFilter: true,
+            clear: true,
+          })
         }
         if (star === 2 && singleReview.productId === this.state.currentItem && items.stars === 2) {
           sortedReviews.push(singleReview);
+          this.setState({
+            twoStarReviews: sortedReviews,
+            twoFilter: true,
+            clear: true,
+          })
         }
         if (star === 1 && singleReview.productId === this.state.currentItem && items.stars === 1) {
           sortedReviews.push(singleReview);
+          this.setState({
+            oneStarReviews: sortedReviews,
+            oneFilter: true,
+            clear: true,
+          });
         }
       });
     });
-    this.setState({
-      currentReview: sortedReviews,
-    });
-    console.log('sorted', sortedReviews);
+
+    let asyncFunc = () => {
+      let filtered = [...this.state.fiveStarReviews, ...this.state.fourStarReviews, ...this.state.threeStarReviews, ...this.state.twoStarReviews, ...this.state.oneStarReviews]
+
+      this.setState((prevState) => ({
+            currentReview: filtered,
+          }));
+
+    };
+    setTimeout(function(){ asyncFunc();}, 1)
   }
+
+  // random(){
+
+  //   var con = [{key: 'list'}]
+  //   var lof = [{house: 'house'}]
+  //   var lert = [...con, ...lof]
+  //   // console.log('sorted', sortedReviews);
+  //   console.log('sortedddd', this.state.currentReview, 'conlof', lert,
+  //   "five stars", this.state.fiveStarReviews);
+  // }
+
+  closeFilterClick(e, num) {
+    e.preventDefault();
+    const {oneFilter, twoFilter, threeFilter, fourFilter, fiveFilter} = this.state;
+    if (num === 1) {
+      this.setState({
+        oneFilter: false,
+        oneStarReviews: [],
+      });
+      if (twoFilter === false && threeFilter === false && fourFilter === false && fiveFilter === false) {
+        this.getAllReviews();
+      }
+    }
+    if (num === 2) {
+      this.setState({
+        twoFilter: false,
+        twoStarReviews: [],
+      });
+      if (oneFilter === false && threeFilter === false && fourFilter === false && fiveFilter === false) {
+        this.getAllReviews();
+      }
+    }
+    if (num === 3) {
+      this.setState({
+        threeFilter: false,
+        threeStarReviews: [],
+      });
+      if (oneFilter === false && twoFilter === false && fourFilter === false && fiveFilter === false) {
+        this.getAllReviews();
+      }
+    }
+    if (num === 4) {
+      this.setState({
+        fourFilter: false,
+        fourStarReviews: [],
+      });
+      if (oneFilter === false && twoFilter === false && threeFilter === false && fiveFilter === false) {
+        this.getAllReviews();
+      }
+    }
+    if (num === 5) {
+      this.setState({
+        fiveFilter: false,
+        fiveStarReviews: [],
+      });
+      if (oneFilter === false && twoFilter === false && threeFilter === false && fourFilter === false) {
+        this.getAllReviews();
+      }
+    }
+    if (num === 'clear' || twoFilter === false && threeFilter === false && fourFilter === false && fiveFilter === false) {
+      this.setState({
+        fiveFilter: false,
+        fourFilter: false,
+        threeFilter: false,
+        twoFilter: false,
+        oneFilter: false,
+        clear: false,
+        fiveStarReviews: [],
+        fourStarReviews: [],
+        threeStarReviews: [],
+        twoStarReviews: [],
+        oneStarReviews: [],
+      });
+      this.getAllReviews();
+    }
+    this.sortRatings(e);
+  }
+
+
+
+  // this.setState({
+  //   fiveFilter: false,
+  //   fourFilter: false,
+  //   threeFilter: false,
+  //   twoFilter: false,
+  //   oneFilter: false,
+  //   clear: false,
+  // });
+
 
   /* -----HELPFUL BUTON COUNT-- */
   // eslint-disable-next-line react/sort-comp
@@ -181,7 +320,7 @@ class App extends React.Component {
 
   render() {
     const {
-      isLoaded, fullReviews, currentReview, ratingsCount, averageRatings, currentItem,
+      isLoaded, fullReviews, currentReview, ratingsCount, averageRatings, currentItem, filters, fiveFilter, fourFilter, threeFilter, twoFilter, oneFilter, clear
     } = this.state;
     return (
       // eslint-disable-next-line react/jsx-filename-extension
@@ -199,6 +338,13 @@ class App extends React.Component {
               sortRatings={this.sortRatings}
               averageRatings={averageRatings}
               currentReview={currentReview}
+              fiveFilter={fiveFilter}
+              fourFilter={fourFilter}
+              threeFilter={threeFilter}
+              twoFilter={twoFilter}
+              oneFilter={oneFilter}
+              clear={clear}
+              closeFilterClick={this.closeFilterClick}
             />
           )
             : null

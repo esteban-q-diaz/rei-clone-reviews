@@ -75,4 +75,6 @@ const seed = async () => {
 seed();
 
 // review_total: Math.floor(Math.random() * 10) + 1,
-//         stars: Math.floor(Math.random() * 5) + 1,
+//         stars: Math.floor(Math.random() * 5) + 1,.
+// deleteAll().then(()=> {console.log('worked')}).catch(err=> console.log(err))
+// insertReviews().then(()=> {console.log('worked')}).catch(err=> console.log(err))

@@ -3,7 +3,7 @@ import React from 'react';
 function UserDetailsItems({ currentReview, onHelpfulClick }) {
   return (
     <div>
-      {console.log("current", currentReview)}
+      {/* {console.log("current", currentReview)} */}
       <h2>{currentReview.reviews[0].name} in  </h2>
       <p>{`${currentReview.reviews[0].city}, ${currentReview.reviews[0].state}`}</p>
       <p>Review {currentReview.reviews[0].review_total}</p>
