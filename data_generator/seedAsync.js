@@ -30,9 +30,6 @@ const seedProduct = () => {
   for (let i = 0; i < 100; i += 1) {
     const product = randomWord(products);
     const newDate = new Date(faker.date.past(5));
-    // var d = newDate.getDate();
-    // var m = newDate.getMonth();
-    // console.log(m, d)
     const year = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(newDate);
     const month = new Intl.DateTimeFormat('en', { month: 'short' }).format(newDate);
     const date = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(newDate);

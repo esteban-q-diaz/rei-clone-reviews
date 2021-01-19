@@ -1,7 +1,17 @@
 const mongoose = require('mongoose');
 const connection = require('./connection.js');
+const faker = require('faker');
+const moment = require('moment');
 
 // let connection = mongoose.connect('mongodb://localhost:27017/product_reviews', { useNewUrlParser: true, useUnifiedTopology: true })
+const products = [
+  { name: `HOKA ONE ONE Clifton 7 Road-Running Shoes - Women's`, id: 1, url: 'https://www.rei.com/media/8f078d8a-aa49-4f1e-9c8f-120063bb2042?size=646x485' },
+  { name: 'Manduka Cork Yoga Block', id: 2, url: 'https://www.rei.com/media/464a596c-9755-4535-aa1b-4f2bae31d780?size=646x485' },
+  { name: 'Smith Trace MIPS Helmet', id: 3, url: 'https://www.rei.com/media/992d6626-cad0-4854-8c5b-98081f51eb05?size=646x485' },
+  { name: 'Co-op Cycles ADV 1.1 Bike', id: 4, url: 'https://www.rei.com/media/3336b5c6-ccb5-4177-ab9b-6d04a0ea40fa?size=646x485' },
+  { name: `REI Co-op Trailbreak 60 Pack - Men's`, id: 5, url: 'https://www.rei.com/media/c74fc48b-628d-45ea-8249-f073a6f4d12e?size=646x485' },
+];
+
 
 const productReviewSchema = new mongoose.Schema({
   productId: Number,
@@ -75,19 +85,67 @@ const getItemReviews = async function (id, callback) {
 
 /* -----SAVE REVIEW--- */
 
-const saveReview = function () {
+const saveReview = function (id, submitData, callback) {
+  console.log("products:", submitData.recommend)
+  let productName;
+  let url;
+  let age;
+  const newDate = new Date();
+  for (var i = 0; i < products.length; i++) {
+    if (products[i].id === Number(id)) {
+      productName = products[i].name;
+      url = products[i].url;
+    }
+  }
+  if (submitData.age !== '') {
+    let sliceAge = submitData.age.split('-')
+    let minNum = Number(sliceAge[0]);
+    let maxNum = Number(sliceAge[1]);
+    age = Math.floor(Math.random() * (maxNum - minNum + 1) + minNum);
+  } else {
+    age = submitData.age;
+  }
+
+
+  if (submitData.recommend !== true || submitData.recommend !== false) {
+    submitData.recommend = true;
+  }
+  let slicedLocation = submitData.location.split(',')
+  let city = slicedLocation[0]
+  let state = slicedLocation[1]
+console.log('sliced', city, "state", state);
+  // figure out a way to get username review totwl to increment
   const sampleReview = new ProductReview({
-    productId: 1,
-    reviews: [{
-      reviewId: 1, email: 'ez@gmail.com', city: 'san jose', review_total: 10, stars: 5,
-    }],
+    productId: Number(id),
+    reviewId: faker.random.number({ min: 1000000, max: 9999999 }),
+    helpful_count: 0,
+    not_helpful_count: 0,
+    reviews: [
+      {
+      productName: productName,
+      image: url,
+      name: submitData.nickname,
+      user: submitData.nickname,
+      email: submitData.email,
+      city: city,
+      state: state,
+      review_total: 1,
+      stars: submitData.starRating,
+      date: moment(newDate).fromNow(),
+      realDate: newDate,
+      title: submitData.title,
+      description: submitData.review,
+      age: age,
+      recommended: submitData.recommend,
+    },
+  ],
   });
 
   sampleReview.save((err, review) => {
     if (err) {
-      console.log('err');
+      callback('err');
     } else {
-      console.log('review');
+      callback(null, review);
     }
   });
 };

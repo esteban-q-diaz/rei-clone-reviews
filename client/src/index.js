@@ -37,11 +37,11 @@ class App extends React.Component {
       twoStarReviews: [],
       oneStarReviews: [],
     };
-    this.formClick = this.formClick.bind(this);
     this.sortRatings = this.sortRatings.bind(this);
     this.onHelpfulClick = this.onHelpfulClick.bind(this);
     this.closeFilterClick = this.closeFilterClick.bind(this);
     this.filterClick = this.filterClick.bind(this);
+    this.submitForm = this.submitForm.bind(this);
   }
 
   componentDidMount() {
@@ -86,26 +86,16 @@ class App extends React.Component {
       });
   }
 
-
-  updateHelpfulClick() {
-    axios.get(`http://localhost:3000/api/getitemreviews/${this.state.currentItem}`)
-      .then((res) => {
-        this.setState({
-          currentReview: res.data,
-        });
-      })
-      .catch((err) => {
-        console.log('error at get item reviews');
-      });
-  }
-
   /* ----- FORM CLICK -----*/
-  formClick(e) {
+  submitForm(e, submitData) {
     e.preventDefault();
-    console.log('form clicked');
+    // console.log('form clicked', submitData);
+    axios.post(`http://localhost:3000/api/postreview/${this.state.currentItem}`, submitData)
+      .then(res => console.log("the data:", res.data))
+      .catch(err => console.log('submit form did not work'))
   }
 
-  /* ----- GET REIVEWS FOR ONE ITEM -----*/
+  /* ----- COUNT HOW MANY STARS EACH LEVEL (1-5) HAS -----*/
   countRatings() {
     const { currentReview, ratingsCount } = this.state;
     let occur = 0;
@@ -146,6 +136,7 @@ class App extends React.Component {
     });
   }
 
+  /* ----- SORT BY RATING STARS -----*/
   sortRatings(e, star) {
     const { fullReviews } = this.state;
     e.preventDefault();
@@ -194,7 +185,8 @@ class App extends React.Component {
         }
       });
     });
-
+    // refactor to use async or promises
+    // waits til all the setStates above have been updated then if makes currentReview have only the filtered
     let asyncFunc = () => {
       let filtered = [...this.state.fiveStarReviews, ...this.state.fourStarReviews, ...this.state.threeStarReviews, ...this.state.twoStarReviews, ...this.state.oneStarReviews]
 
@@ -206,16 +198,7 @@ class App extends React.Component {
     setTimeout(function(){ asyncFunc();}, 1)
   }
 
-  // random(){
-
-  //   var con = [{key: 'list'}]
-  //   var lof = [{house: 'house'}]
-  //   var lert = [...con, ...lof]
-  //   // console.log('sorted', sortedReviews);
-  //   console.log('sortedddd', this.state.currentReview, 'conlof', lert,
-  //   "five stars", this.state.fiveStarReviews);
-  // }
-
+  /* ----- UNFILTER / DELETE FILTER BOX -----*/
   closeFilterClick(e, num) {
     e.preventDefault();
     const {oneFilter, twoFilter, threeFilter, fourFilter, fiveFilter} = this.state;
@@ -284,6 +267,7 @@ class App extends React.Component {
     this.sortRatings(e);
   }
 
+  /* ----- SORT DROP DOWN FUNCTIONS -----*/
   filterClick(e) {
     e.preventDefault()
     console.log('filter clicked', e.target.value)
@@ -372,6 +356,19 @@ class App extends React.Component {
     }
   }
 
+  /* ----- UPDATE HELPFUL COUNT IMMEDIATELY-----*/
+  updateHelpfulClick() {
+    axios.get(`http://localhost:3000/api/getitemreviews/${this.state.currentItem}`)
+      .then((res) => {
+        this.setState({
+          currentReview: res.data,
+        });
+      })
+      .catch((err) => {
+        console.log('error at get item reviews');
+      });
+  }
+
   render() {
     const {
       isLoaded, fullReviews, currentReview, ratingsCount, averageRatings, currentItem, filters, fiveFilter, fourFilter, threeFilter, twoFilter, oneFilter, clear
@@ -381,7 +378,10 @@ class App extends React.Component {
       <div>
         {
           isLoaded ? (
-            <ReviewListHeader formClick={this.formClick} currentReview={currentReview} />
+            <ReviewListHeader
+            currentReview={currentReview}
+            submitForm={this.submitForm}
+            />
           )
             : null
         }

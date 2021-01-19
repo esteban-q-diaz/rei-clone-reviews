@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import Form from './Form.jsx';
 
-function ReviewListHeader({formClick, currentReview}) {
+function ReviewListHeader({submitForm, currentReview}) {
   const [clicked, setClick] = useState(false);
 
   console.log('current from header', currentReview)
@@ -27,6 +27,7 @@ function ReviewListHeader({formClick, currentReview}) {
           clicked ? (
             <Form currentReview={currentReview}
             closeForm={closeForm}
+            submitForm={submitForm}
             />
           )
             : null

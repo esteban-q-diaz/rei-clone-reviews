@@ -36,16 +36,18 @@ app.get('/api/getitemreviews/:id', (req, res) => {
 
 /* -----SAVE REVIEW---*/
 
-// app.post('/api/postreviews', (req, res) => {
+app.post('/api/postreview/:id', (req, res) => {
+  let productId = req.params.id;
+  let submitData = req.body;
 
-//   mongo.saveReview((err, reviews) => {
-//     if (err) {
-//       res.send(err);
-//     } else {
-//       res.send(reviews);
-//     }
-//   });
-// });
+  mongo.saveReview(productId, submitData, (err, reviews) => {
+    if (err) {
+      res.send(err);
+    } else {
+      res.send(reviews);
+    }
+  });
+});
 
 /* -----HELPFUL BUTON COUNT-- */
 
