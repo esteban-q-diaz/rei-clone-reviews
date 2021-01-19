@@ -34,6 +34,20 @@ app.get('/api/getitemreviews/:id', (req, res) => {
   });
 });
 
+/* ----- LOAD MORE ITEM--- */
+
+app.get('/api/loadmore/:id', (req, res) => {
+  const id = req.params.id;
+  mongo.loadMoreItems([id], (err, reviews) => {
+    if (err) {
+      res.send(err);
+    } else {
+      res.send(reviews);
+    }
+  });
+});
+
+
 /* -----SAVE REVIEW---*/
 
 app.post('/api/postreview/:id', (req, res) => {
@@ -148,6 +162,8 @@ app.get('/api/mostrelevant', (req, res) => {
     }
   });
 });
+
+
 app.listen(PORT, (err) => {
   if (err) {
     console.log('err');

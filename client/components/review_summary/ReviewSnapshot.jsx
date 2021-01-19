@@ -22,7 +22,7 @@ function ReviewSnapshot( { ratingsCount, sortRatings, averageRatings, currentRev
       <p onClick={(e) => {sortRatings(e, 3)}}>3☆ {ratingsCount.three}</p>
       <p onClick={(e) => {sortRatings(e, 2)}}>2☆ {ratingsCount.two}</p>
       <p onClick={(e) => {sortRatings(e, 1)}}>1☆ {ratingsCount.one}</p>
-      <p>1-12 of {currentReview.length} Reviews</p>
+      <p>1-{currentReview.length} of {currentReview.length} Reviews</p>
       <p>Active Filters</p>
       {
           fiveFilter ? (

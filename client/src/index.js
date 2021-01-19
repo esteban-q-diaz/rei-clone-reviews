@@ -42,6 +42,7 @@ class App extends React.Component {
     this.closeFilterClick = this.closeFilterClick.bind(this);
     this.filterClick = this.filterClick.bind(this);
     this.submitForm = this.submitForm.bind(this);
+    this.loadMoreItems = this.loadMoreItems.bind(this);
   }
 
   componentDidMount() {
@@ -86,6 +87,25 @@ class App extends React.Component {
       });
   }
 
+    /* ----- LOADMORE ITEMS -----*/
+    loadMoreItems(e) {
+      e.preventDefault();
+        axios.get(`http://localhost:3000/api/loadmore/${this.state.currentItem}`)
+        .then((res) => {
+          this.setState({
+            currentReview: res.data,
+            currentReviewTwo: res.data,
+          });
+          if (this.state.count === false) {
+            console.log('i am herrrrrrreee')
+            this.countRatings();
+          }
+        })
+        .catch((err) => {
+          console.log('error at get item reviews');
+        });
+    }
+
   /* ----- FORM CLICK -----*/
   submitForm(e, submitData) {
     e.preventDefault();
@@ -128,7 +148,7 @@ class App extends React.Component {
     + 2 * Number(a.two) + 3 * Number(a.three) + 4 * Number(a.four) + 5 * Number(a.five);
 
     const average = total / occur;
-
+    // calculates the average of star reviews
     this.setState({
       averageRatings: Math.round(average * 10) / 10,
       isLoaded: true,
@@ -410,6 +430,7 @@ class App extends React.Component {
             <UserDetails
               currentReview={currentReview}
               onHelpfulClick={this.onHelpfulClick}
+              loadMoreItems={this.loadMoreItems}
             />
           )
             : null

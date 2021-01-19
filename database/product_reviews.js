@@ -53,7 +53,7 @@ const getReviews = function (callback) {
     } else {
       callback(null, reviews);
     }
-  }).limit(100);
+  }).limit(200);
 };
 
 /* ----- GET CERTAIN ITEM REVIEWS --- */
@@ -62,7 +62,21 @@ const getItemReviews = async function (id, callback) {
   var productId = Number(id[0]);
   this.currentProductId = productId;
   try {
-    const results = await ProductReview.find({productId: productId}).sort('reviews.date').limit(100);
+    const results = await ProductReview.find({productId: productId}).sort('reviews.date').limit(12);
+    callback(null, results);
+  }
+  catch {
+    console.log('error');
+  }
+};
+
+/* ----- GET CERTAIN ITEM REVIEWS --- */
+
+const loadMoreItems = async function (id, callback) {
+  var productId = Number(id[0]);
+  this.currentProductId = productId;
+  try {
+    const results = await ProductReview.find({productId: productId}).sort('reviews.date').limit(24);
     callback(null, results);
   }
   catch {
@@ -114,7 +128,7 @@ const saveReview = function (id, submitData, callback) {
   let city = slicedLocation[0]
   let state = slicedLocation[1]
 console.log('sliced', city, "state", state);
-  // figure out a way to get username review totwl to increment
+  // figure out a way to get username review to increment
   const sampleReview = new ProductReview({
     productId: Number(id),
     reviewId: faker.random.number({ min: 1000000, max: 9999999 }),
@@ -223,7 +237,10 @@ const mostHelpful = async function(callback) {
 const mostRelevant = async function(callback) {
   // refactor this
     try {
-      const results = await ProductReview.find({productId: this.currentProductId}).sort({'reviews.review_total': -1}).limit(50);
+      const results = await ProductReview.find({productId: this.currentProductId}).sort({'reviews.review_total': -1}).limit(50)
+      // .exec((err, results) =>{
+      //   if (err)...
+      // });
       callback(null, results);
     }
     catch {
@@ -231,7 +248,6 @@ const mostRelevant = async function(callback) {
     }
 }
 
-
 module.exports = {
-  ProductReview, getReviews, saveReview, helpfulCount, getItemReviews, notHelpfulCount, sortMostRevent, highToLow, lowToHigh, mostHelpful, mostRelevant,
+  ProductReview, getReviews, saveReview, helpfulCount, getItemReviews, notHelpfulCount, sortMostRevent, highToLow, lowToHigh, mostHelpful, mostRelevant, loadMoreItems,
 };

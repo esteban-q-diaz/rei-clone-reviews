@@ -1,6 +1,6 @@
 import React from 'react';
 
-function UserDetailsItems({ currentReview, onHelpfulClick }) {
+function UserDetailsItems({ currentReview, onHelpfulClick, loadMoreItems }) {
   return (
     <div>
       {/* {console.log("current", currentReview)} */}
@@ -17,11 +17,11 @@ function UserDetailsItems({ currentReview, onHelpfulClick }) {
       </h3>
       <p>{currentReview.reviews[0].date}</p>
       <h2>{currentReview.reviews[0].title}</h2>
-      <p>{currentReview.reviews[0].description}.</p>
+      <p>{currentReview.reviews[0].description}</p>
       {/* <h2>Yoga Experience</h2> */}
       <p>Beginner</p>
-      <h2>Age</h2>
-      <p>55-54</p>
+      <h2>Age:</h2>
+      <p>{currentReview.reviews[0].age}</p>
       <h2>{currentReview.reviews[0].recommended ? 'Yes,' : 'No,'}</h2>
       <p>{currentReview.reviews[0].recommended ? 'I recommend this product.' : 'I do not recommend this product.'}</p>
       <p>Helpful?</p>
@@ -33,7 +33,7 @@ function UserDetailsItems({ currentReview, onHelpfulClick }) {
       </button>
       <button>Report as inappropriate</button>
 
-
+      <button type="submit" onClick={loadMoreItems}>Load More</button>
       {/* <ReviewDetails currentReview={currentReview} onHelpfulClick={onHelpfulClick} /> */}
     </div>
 
