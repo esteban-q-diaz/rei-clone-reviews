@@ -19,6 +19,7 @@ class App extends React.Component {
       count: false,
       fullReviews: [],
       currentReview: [],
+      // eslint-disable-next-line react/no-unused-state
       currentReviewTwo: [],
       ratingsCount: {
         one: 0, two: 0, three: 0, four: 0, five: 0,
@@ -48,7 +49,8 @@ class App extends React.Component {
   componentDidMount() {
     // eslint-disable-next-line react/prop-types
     const { currentItem } = this.props;
-    console.log('review summary current',currentItem);
+    // eslint-disable-next-line no-console
+    console.log('review summary current', currentItem);
     this.getAllReviews();
   }
 
@@ -63,22 +65,25 @@ class App extends React.Component {
         this.getItemReviews();
       })
       .catch((err) => {
+        // eslint-disable-next-line no-console
         console.log(err);
       });
   }
 
   /* ----- GET REIVEWS FOR ONE ITEM -----*/
   getItemReviews() {
+    const { count } = this.state;
     const index = Math.floor(Math.random() * 5) + 1;
     axios.get(`http://localhost:3000/api/getitemreviews/${index}`)
       .then((res) => {
         this.setState({
           currentItem: index,
           currentReview: res.data,
+          // eslint-disable-next-line react/no-unused-state
           currentReviewTwo: res.data,
         });
-        if (this.state.count === false) {
-          console.log('i am herrrrrrreee')
+        if (count === false) {
+          console.log('i am herrrrrrreee');
           this.countRatings();
         }
       })

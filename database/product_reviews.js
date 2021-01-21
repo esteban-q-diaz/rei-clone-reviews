@@ -2,6 +2,8 @@ const mongoose = require('mongoose');
 const connection = require('./connection.js');
 const faker = require('faker');
 const moment = require('moment');
+require('regenerator-runtime');
+
 
 // let connection = mongoose.connect('mongodb://localhost:27017/product_reviews', { useNewUrlParser: true, useUnifiedTopology: true })
 const products = [
@@ -76,7 +78,7 @@ const loadMoreItems = async function (id, callback) {
   var productId = Number(id[0]);
   this.currentProductId = productId;
   try {
-    const results = await ProductReview.find({productId: productId}).sort('reviews.date').limit(24);
+    const results = await ProductReview.find({productId: productId}).sort('reviews.date').limit(80);
     callback(null, results);
   }
   catch {

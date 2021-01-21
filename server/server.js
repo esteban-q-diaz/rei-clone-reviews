@@ -3,7 +3,7 @@ const app = express();
 const PORT = 3000;
 const mongo = require('../database/product_reviews.js');
 const cors = require('cors');
-var bodyParser = require('body-parser')
+var bodyParser = require('body-parser');
 
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -16,7 +16,7 @@ app.get('/api/getallreviews', (req, res) => {
     if (err) {
       res.send(err);
     } else {
-      res.send(reviews);
+      res.status(200).send(reviews);
     }
   });
 });
@@ -29,7 +29,7 @@ app.get('/api/getitemreviews/:id', (req, res) => {
     if (err) {
       res.send(err);
     } else {
-      res.send(reviews);
+      res.status(200).send(reviews);
     }
   });
 });
@@ -42,7 +42,7 @@ app.get('/api/loadmore/:id', (req, res) => {
     if (err) {
       res.send(err);
     } else {
-      res.send(reviews);
+      res.status(200).send(reviews);
     }
   });
 });
@@ -58,7 +58,7 @@ app.post('/api/postreview/:id', (req, res) => {
     if (err) {
       res.send(err);
     } else {
-      res.send(reviews);
+      res.status(200).send(reviews);
     }
   });
 });
@@ -102,7 +102,7 @@ app.get('/api/mostrecent', (req, res) => {
     if (err) {
       res.send(err);
     } else {
-      res.send(reviews)
+      res.status(200).send(reviews)
     }
   });
 });
@@ -116,7 +116,7 @@ app.get('/api/hightolow', (req, res) => {
     if (err) {
       res.send(err);
     } else {
-      res.send(reviews)
+      res.status(200).send(reviews)
     }
   });
 });
@@ -130,7 +130,7 @@ app.get('/api/lowtohigh', (req, res) => {
     if (err) {
       res.send(err);
     } else {
-      res.send(reviews)
+      res.status(200).send(reviews)
     }
   });
 });
@@ -144,7 +144,7 @@ app.get('/api/mosthelpful', (req, res) => {
     if (err) {
       res.send(err);
     } else {
-      res.send(reviews)
+      res.status(200).send(reviews)
     }
   });
 });
@@ -158,7 +158,7 @@ app.get('/api/mostrelevant', (req, res) => {
     if (err) {
       res.send(err);
     } else {
-      res.send(reviews)
+      res.status(200).send(reviews)
     }
   });
 });
@@ -171,3 +171,5 @@ app.listen(PORT, (err) => {
     console.log(`Connected on localhost:${PORT}`);
   }
 });
+
+module.exports = app;
