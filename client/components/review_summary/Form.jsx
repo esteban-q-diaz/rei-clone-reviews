@@ -26,7 +26,7 @@ function Form({ currentReview, closeForm, submitForm }) {
     <div>
       <option onClick={closeForm} className="closeForm">X</option>
       <img style={{ width: '200px' }} src={currentReview[0].reviews[0].image} alt="Missing" />
-      <form onClick={(e) => {e.preventDefault()}}>
+      <form onClick={(e) => { e.preventDefault(); }}>
 
         <h3>
           My Review for
@@ -87,10 +87,15 @@ function Form({ currentReview, closeForm, submitForm }) {
   );
 }
 
+Form.defaultProps = {
+  currentReview: [],
+  submitForm: () => {},
+};
+
 Form.propTypes = {
-  currentReview: PropTypes.instanceOf(Array).isRequired,
+  currentReview: PropTypes.instanceOf(Array),
   closeForm: PropTypes.func.isRequired,
-  submitForm: PropTypes.func.isRequired,
+  submitForm: PropTypes.func,
 };
 
 export default Form;

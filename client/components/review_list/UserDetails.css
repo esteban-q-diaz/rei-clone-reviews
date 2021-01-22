@@ -1,0 +1,13 @@
+.userContainer {
+  display: flex;
+  flex-direction: column;
+  border-top: solid;
+  font-family: "Roboto","Helvetica Neue","Helvetica","Arial",sans-serif!important;
+  font-style: normal!important;
+  font-weight: 700!important;
+}
+
+.userContainer {
+  display: flex;
+  flex-direction: column;
+}

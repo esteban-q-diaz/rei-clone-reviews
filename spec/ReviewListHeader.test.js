@@ -1,6 +1,6 @@
 import React from 'react';
 import Enzyme, { shallow } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
+import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 import { expect as expectChai } from 'chai';
 import ReviewListHeader from '../client/components/review_summary/ReviewListHeader';
 import Form from '../client/components/review_summary/Form';

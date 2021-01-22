@@ -24,8 +24,12 @@ function Filters({ filterClick }) {
   );
 }
 
+Filters.defaultProps = {
+  filterClick: () => {},
+};
+
 Filters.propTypes = {
-  filterClick: PropTypes.func.isRequired,
+  filterClick: PropTypes.func,
 };
 
 export default Filters;

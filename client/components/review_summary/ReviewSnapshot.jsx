@@ -11,6 +11,7 @@ import TwoFilter from './filters/TwoFilter';
 import OneFilter from './filters/OneFilter';
 import ClearFilters from './filters/ClearFilters';
 import './ReviewSnapshot.css';
+import { GrStar } from 'react-icons/gr';
 
 const FullDiv = styled.div`
   display: flex;
@@ -72,15 +73,44 @@ function ReviewSnapshot({
             <p className="ratingSnapshot">
               Rating Snapshot
             </p>
-            <p>Select a row below to filter reviews.</p>
+            <p className="selectRow">Select a row below to filter reviews.</p>
           </div>
-          <div className='stars'>
-            <p className="fiveFilter" onClick={(e) => {sortRatings(e, 5)}}>5☆ {ratingsCount.five}</p>
-
-            <p onClick={(e) => {sortRatings(e, 4)}}>4☆ {ratingsCount.four}</p>
-            <p onClick={(e) => {sortRatings(e, 3)}}>3☆ {ratingsCount.three}</p>
-            <p onClick={(e) => {sortRatings(e, 2)}}>2☆ {ratingsCount.two}</p>
-            <p onClick={(e) => {sortRatings(e, 1)}}>1☆ {ratingsCount.one}</p>
+          <div className="starsContainer">
+            <div className="fiveFilterr" onClick={(e) => { sortRatings(e, 5); }}>
+              5 <GrStar />
+              {/* {ratingsCount.five} */}
+            </div>
+            <div className="fiveContainer">
+              <div className="fiveBar"></div>
+            </div>
+            <div onClick={(e) => { sortRatings(e, 4); }}>
+              4 <GrStar />
+              {/* {ratingsCount.four} */}
+            </div>
+            <div className="fiveContainer">
+              <div className="fiveBar"></div>
+            </div>
+            <div onClick={(e) => { sortRatings(e, 3); }}>
+              3 <GrStar />
+              {/* {ratingsCount.three} */}
+            </div>
+            <div className="fiveContainer">
+              <div className="fiveBar"></div>
+            </div>
+            <div onClick={(e) => { sortRatings(e, 2); }}>
+              2 <GrStar />
+              {/* {ratingsCount.two} */}
+            </div>
+            <div className="fiveContainer">
+              <div className="fiveBar"></div>
+            </div>
+            <div onClick={(e) => { sortRatings(e, 1); }}>
+              1 <GrStar />
+              {/* {ratingsCount.one} */}
+            </div>
+            <div className="fiveContainer">
+              <div className="fiveBar"></div>
+            </div>
 
           </div>
 
@@ -98,7 +128,7 @@ function ReviewSnapshot({
 
         <div className="filter">
           <p>
-            1-
+            1 -
             {currentReview.length}
             of
             {currentReview.length}
@@ -174,25 +204,36 @@ function ReviewSnapshot({
           )
             : null
         }
-
     </div>
   );
 }
 
+ReviewSnapshot.defaultProps = {
+  averageRatings: 0,
+  sortRatings: () => {},
+  closeFilterClick: () => {},
+  filterClick: () => {},
+  fiveFilter: false,
+  fourFilter: false,
+  threeFilter: false,
+  twoFilter: false,
+  oneFilter: false,
+  clear: false,
+};
+
 ReviewSnapshot.propTypes = {
   ratingsCount: PropTypes.instanceOf(Object).isRequired,
   currentReview: PropTypes.instanceOf(Array).isRequired,
-  averageRatings: PropTypes.number.isRequired,
-  sortRatings: PropTypes.func.isRequired,
-  closeFilterClick: PropTypes.func.isRequired,
-  filterClick: PropTypes.func.isRequired,
-  fiveFilter: PropTypes.bool.isRequired,
-  fourFilter: PropTypes.bool.isRequired,
-  threeFilter: PropTypes.bool.isRequired,
-  twoFilter: PropTypes.bool.isRequired,
-  oneFilter: PropTypes.bool.isRequired,
-  clear: PropTypes.bool.isRequired,
-
+  averageRatings: PropTypes.number,
+  sortRatings: PropTypes.func,
+  closeFilterClick: PropTypes.func,
+  filterClick: PropTypes.func,
+  fiveFilter: PropTypes.bool,
+  fourFilter: PropTypes.bool,
+  threeFilter: PropTypes.bool,
+  twoFilter: PropTypes.bool,
+  oneFilter: PropTypes.bool,
+  clear: PropTypes.bool,
 };
 
 export default ReviewSnapshot;

@@ -46,8 +46,6 @@ function ReviewListHeader({ submitForm, currentReview }) {
           Write A Review
         </button>
       </div>
-
-
       {
           clicked ? (
             <Form
@@ -63,9 +61,14 @@ function ReviewListHeader({ submitForm, currentReview }) {
   );
 }
 
+ReviewListHeader.defaultProps = {
+  submitForm: () => {},
+  currentReview: [],
+};
+
 ReviewListHeader.propTypes = {
-  submitForm: PropTypes.func.isRequired,
-  currentReview: PropTypes.instanceOf(Array).isRequired,
+  submitForm: PropTypes.func,
+  currentReview: PropTypes.instanceOf(Array),
 };
 
 export default ReviewListHeader;

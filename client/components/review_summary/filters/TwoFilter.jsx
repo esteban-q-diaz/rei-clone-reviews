@@ -1,14 +1,20 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
-function TwoFilter( { currentReview, closeFilterClick } ) {
+function TwoFilter({ closeFilterClick }) {
   return (
     <div>
-      {/* <p>1-12 of {currentReview.length} Reviews</p>
-      <p>Active Filters</p> */}
-      <button type="submit" onClick={e=>closeFilterClick(e, 2)}>2 Stars x </button>
-      {/* <button type="submit">Clear All x </button> */}
+      <button type="submit" onClick={(e) => closeFilterClick(e, 2)}>2 Stars x </button>
     </div>
   );
 }
+
+TwoFilter.defaultProps = {
+  closeFilterClick: () => {},
+};
+
+TwoFilter.propTypes = {
+  closeFilterClick: PropTypes.func,
+};
 
 export default TwoFilter;
