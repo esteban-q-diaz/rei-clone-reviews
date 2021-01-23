@@ -2,12 +2,137 @@
   display: flex;
   flex-direction: column;
   border-top: solid;
+  border-color: #B8B8B8;
+  border-width: 1px;
   font-family: "Roboto","Helvetica Neue","Helvetica","Arial",sans-serif!important;
   font-style: normal!important;
-  font-weight: 700!important;
+  padding-top: 20px;
+  padding-bottom: 50px;
+  /* font-weight: 700!important; */
+  /* background: green; */
 }
 
 .userContainer {
   display: flex;
   flex-direction: column;
+  /* background: green; */
+}
+
+/* Styling for user information section */
+.flexuser{
+  display: flex;
+  flex-direction: row;
+}
+
+.userDetails {
+  flex: 1;
+  /* background: orange; */
+}
+
+.detailsContainer {
+  flex: 2;
+  /* background: blue; */
+}
+
+.review-name {
+  padding-top: 20px;
+  padding-bottom: 10px;
+}
+
+/* styling for the star section - created the star sections own flexbox so it can line as rows vs columns */
+.flexstars{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding-top: 20px;
+}
+
+.starfilters {
+  flex: .4;
+  align-items: center;
+}
+
+.review-date {
+  flex: 2;
+  align-items: center;
+}
+
+.review-title {
+  padding-bottom: 10px;
+}
+
+.review-description {
+  padding-bottom: 20px;
+}
+
+/* styling for the age section - created the age sections own flexbox so it can line as rows vs columns */
+.flexage{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.age-info {
+  flex: .11;
+  align-items: center;
+  padding-bottom: 20px;
+}
+
+.age-number {
+  flex: 2;
+  align-items: center;
+}
+
+/* styling for the helpful section - created the helpful sections own flexbox so it can line as rows vs columns */
+.flex-helpful-sentence{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.yes-no {
+  flex: .2;
+  align-items: center;
+}
+
+.sentence {
+  flex: 2;
+  align-items: center;
+}
+
+/* option two for flex helpful sentence */
+/* .flex-helpful-sentence {
+  display: grid;
+  grid-template-columns: 7% 55%;
+  grid-column-gap: 1em;
+  line-height: 18px;\
+  align-items: center;\\
+} */
+
+/* styling for the was it helpful click section - created the was it helpful click  sections own flexbox so it can line as rows vs columns */
+
+.flexhelpful{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding-bottom: 20px;
+  padding-top: 20px;
+}
+
+.helpful {
+  flex-basis: 12%;
+  /* background: orange; */
+}
+
+.helfulpClick {
+  flex: 2;
+  /* background: blue; */
+}
+
+.gridbtn {
+  display: grid;
+  grid-template-columns: 10% 10% 30%;
+  grid-column-gap: .5em;
+  line-height: 18px;
+  align-items: center;
 }

@@ -1,12 +1,59 @@
+.main {
+  /* display: flex;
+  position: relative; */
+  /* margin: -1px 0 0;
+  padding: 1rem .5rem; */
+  line-height: 1.333;
+  font-weight: 600;
+  letter-spacing: -.16px;
+  color: #292929!important;
+  font-size: 16px!important;
+  font-family: "Roboto","Helvetica Neue","Helvetica","Arial",sans-serif!important;
+  font-style: normal!important;
+  font-weight: 400!important;
+  font-variant: normal!important;
+  text-decoration: none!important;
+  text-transform: none!important;
+}
+
+.flexsnapshot {
+  display: flex;
+  flex-direction: column;
+  /* flex: 4; */
+
+  /* border-right: solid; */
+}
+
+.rating-snapshot {
+  flex: 3;
+  line-height: 50px;
+  padding-top: 0px;
+  padding-bottom: 20px;
+  /* background-color: green; */
+  letter-spacing: -.16px;
+}
+/*
+.ratingsSnapshot {
+  flex: 1;
+  line-height: 0px;
+  background-color: grey;
+} */
+
+.selectRow {
+  flex: 1;
+  line-height: 0px;
+}
+
 .starsContainer {
   display: grid;
   grid-template-columns: 10% 55%;
-  /* display: flex;
-  flex-wrap: wrap;
-  flex-direction: column; */
+  grid-column-gap: 1em;
   line-height: 18px;
-  /* border-right: solid; */
-  margin-left: 8px;
+  padding-left: 8px;
+  padding-top: 10px;
+  padding-bottom: 20px;
+  align-items: center;
+  /* background-color: blue; */
 }
 
 .fiveFilter {
@@ -33,12 +80,7 @@
   border-radius: 2px;
 }
 
-.header {
-  line-height: 5px;
-  padding-top: 10px;
-}
-
-.container {
+.filter-container {
   display: flex;
   color: #292929!important;
   font-size: 16px!important;
@@ -48,7 +90,7 @@
   font-variant: normal!important;
   text-decoration: none!important;
   text-transform: none!important;
-
+  /* background-color: red; */
 }
 
 .filter {
@@ -56,10 +98,30 @@
   flex-direction: column;
   flex: 1;
   line-height: 15px;
+  padding-bottom: 15px;
+  padding-top: 30px;
+  padding-left: 10px;
 }
 
 .sort {
   display: flex;
   justify-content: flex-end;
+  flex: 3;
+}
+
+/* the .averageRatings section gets its own flexbox so that it aligns to the right of the first section */
+.flexoutter {
+  display: flex;
+  flex-direction: row;
+}
+
+.snapshot-star-filters {
+  flex: 2
+}
+
+.averageRatings {
+  /* background-color: purple; */
+  /* display: flex; */
+  justify-content: flex-start;
   flex: 3;
 }

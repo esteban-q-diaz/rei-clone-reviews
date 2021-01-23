@@ -2,11 +2,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import './UserDetails.css';
 import { GrStar } from 'react-icons/gr';
+import './UserDetailsItemsStyle.css';
 
 function UserDetailsItems({ currentReview, onHelpfulClick, loadMoreItems }) {
   return (
     <div className="userContainer">
-      <h2>
+
+    <div className="flexuser">
+      <div className="userDetails">
+      <h2 className="review-name">
         {currentReview.reviews[0].name}
         in
       </h2>
@@ -18,48 +22,93 @@ function UserDetailsItems({ currentReview, onHelpfulClick, loadMoreItems }) {
         Review
         {currentReview.reviews[0].review_total}
       </p>
+      </div>
+
+
+
     < div className="detailsContainer">
-      <h2> REVIEW DETAILS STARTS HERE</h2>
+
+<div className="flexstars">
+    <div className="starfilters">
       <h2><GrStar size={20} color='#BE7B2C'/> <GrStar size={20} color='#BE7B2C'/> <GrStar size={20} color='#BE7B2C'/> <GrStar size={20} color='#BE7B2C'/> <GrStar size={20} color='#BE7B2C'/></h2>
       <h3>
-        {`${currentReview.reviews[0].stars} `}
-        Stars
+        {/* {`${currentReview.reviews[0].stars} `}
+        Stars */}
       </h3>
+    </div>
+
+    <div className="review-date">
       <p>
-        {currentReview.reviews[0].date}
+      {` •  ${currentReview.reviews[0].date}`}
       </p>
-      <h2>
+    </div>
+</div>
+
+
+      <h2 className="review-title">
         {currentReview.reviews[0].title}
       </h2>
-      <p>
+      <p className="review-description">
         {currentReview.reviews[0].description}
       </p>
+    <div className="flexage">
+      <div className="age-info">
       {/* <h2>Yoga Experience</h2> */}
-      <p>Beginner</p>
+      {/* <p>Beginner</p> */}
       <h2>Age:</h2>
+      </div>
+
+      <div className="age-info">
       <p>
         {currentReview.reviews[0].age}
       </p>
+      </div>
+</div>
+
+
+  <div className="flex-helpful-sentence">
+    <div className="yes-no">
       <h2>
         {currentReview.reviews[0].recommended ? 'Yes,' : 'No,'}
       </h2>
+      </div>
+
+      <div className="sentence">
       <p>
         {currentReview.reviews[0].recommended ? 'I recommend this product.' : 'I do not recommend this product.'}
       </p>
+      </div>
+  </div>
+
+
+
+<div className="flexhelpful">
+
+    <div className="helpful">
       <p>Helpful?</p>
-      <button type="submit" onClick={(e) => { onHelpfulClick(e, 'yes', currentReview.reviewId); }}>
-        Yes -
+    </div>
+
+    <div className="helfulpClick">
+
+<div className="gridbtn">
+      <button className="yesbtn" type="submit" onClick={(e) => { onHelpfulClick(e, 'yes', currentReview.reviewId); }}>
+        {`Yes ∙ `}
         {currentReview.helpful_count}
       </button>
-      <button type="submit" onClick={(e) => { onHelpfulClick(e, 'no', currentReview.reviewId); }}>
-        No -
+
+      <button className="nobtn" type="submit" onClick={(e) => { onHelpfulClick(e, 'no', currentReview.reviewId); }}>
+      {`No ∙ `}
         {currentReview.not_helpful_count}
       </button>
-      <button type="submit">Report as inappropriate</button>
+      <button className="reportbtn" type="submit">Report as inappropriate</button>
+      </div>
 
+      </div>
+</div>
       {/* <button type="submit" onClick={loadMoreItems}>Load More</button> */}
       {/* <ReviewDetails currentReview={currentReview} onHelpfulClick={onHelpfulClick} /> */}
       </div>
+    </div>
     </div>
   );
 }

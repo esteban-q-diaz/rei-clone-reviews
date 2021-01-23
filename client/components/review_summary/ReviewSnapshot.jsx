@@ -13,50 +13,27 @@ import ClearFilters from './filters/ClearFilters';
 import './ReviewSnapshot.css';
 import { GrStar } from 'react-icons/gr';
 
-const FullDiv = styled.div`
-  display: flex;
-`;
 
-const Snapshot = styled.div`
-  display: flex;
-  flex-direction: column;
-  flex: 4;
-  position: relative;
-  margin: -1px 0 0;
-  padding: 1rem .5rem;
-  line-height: 1.333;
-  font-weight: 600;
-  letter-spacing: -.16px;
-  color: #292929!important;
-  font-size: 16px!important;
-  font-family: "Roboto","Helvetica Neue","Helvetica","Arial",sans-serif!important;
-  font-style: normal!important;
-  font-weight: 400!important;
-  font-variant: normal!important;
-  text-decoration: none!important;
-  text-transform: none!important;
-  /* border-right: solid; */
-`;
-
-const Average = styled.div`
-  display: flex;
-  justify-content: flex-start;
-  flex: 3;
-  position: relative;
-  margin: -1px 0 0;
-  padding: 1rem .5rem;
-  line-height: 1.333;
-  font-weight: 600;
-  letter-spacing: -.16px;
-  color: #292929!important;
-  font-size: 16px!important;
-  font-family: "Roboto","Helvetica Neue","Helvetica","Arial",sans-serif!important;
-  font-style: normal!important;
-  font-weight: 400!important;
-  font-variant: normal!important;
-  text-decoration: none!important;
-  text-transform: none!important;
-`;
+// const Snapshot = styled.div`
+//   display: flex;
+//   flex-direction: column;
+//   flex: 4;
+//   position: relative;
+//   /* margin: -1px 0 0;
+//   padding: 1rem .5rem; */
+//   line-height: 1.333;
+//   font-weight: 600;
+//   letter-spacing: -.16px;
+//   color: #292929!important;
+//   font-size: 16px!important;
+//   font-family: "Roboto","Helvetica Neue","Helvetica","Arial",sans-serif!important;
+//   font-style: normal!important;
+//   font-weight: 400!important;
+//   font-variant: normal!important;
+//   text-decoration: none!important;
+//   text-transform: none!important;
+//   /* border-right: solid; */
+// `;
 
 function ReviewSnapshot({
   ratingsCount, sortRatings, averageRatings,
@@ -65,16 +42,23 @@ function ReviewSnapshot({
   clear, closeFilterClick, filterClick,
 }) {
   return (
+<div>
+    <div className="main">
 
-    <div>
-      <FullDiv>
-        <Snapshot>
-          <div className="header">
+    <div className="flexoutter">
+      <div className="snapshot-star-filters">
+          <div className="flexsnapshot">
+
+          <div className="rating-snapshot">
             <p className="ratingSnapshot">
               Rating Snapshot
             </p>
             <p className="selectRow">Select a row below to filter reviews.</p>
           </div>
+
+
+
+
           <div className="starsContainer">
             <div className="fiveFilterr" onClick={(e) => { sortRatings(e, 5); }}>
               5 <GrStar />
@@ -111,30 +95,44 @@ function ReviewSnapshot({
             <div className="fiveContainer">
               <div className="fiveBar"></div>
             </div>
+            </div>
 
           </div>
+        </div>
 
-        </Snapshot>
 
-        <Average>
+
+
+
+
+
+
+
+
+          <div className="averageRatings">
 
           <AverageRatings
             averageRatings={averageRatings}
           />
-        </Average>
-      </FullDiv>
+          </div>
 
-      <div className="container">
+
+        </div>
+
+        </div>
+
+      <div className="filter-container">
 
         <div className="filter">
           <p>
-            1 -
-            {currentReview.length}
-            of
-            {currentReview.length}
-            Reviews
+            {`1 - `}
+            {`${currentReview.length} `}
+            {`of `}
+            {`${currentReview.length} `}
+            {`Reviews `}
           </p>
-          <p>Active Filters</p>
+          {/* The text below should only appear is the filters are activaters */}
+          {/* <p>Active Filters</p> */}
         </div>
 
         <div className="sort">

@@ -1,15 +1,21 @@
-.container {
+.sort-container {
   display: flex;
+  /* background-color: orange; */
+  padding-bottom: 15px;
+  padding-top: 30px;
+  padding-left: 10px;
 }
 
 .sortBy {
   display: flex;
-  flex: 1;
+  flex: 2;
+
 }
 
 .sortSelect {
   display: flex;
   flex: 2;
+
   background-attachment: scroll!important;
     background-color: transparent!important;
     background-image: none!important;
@@ -63,3 +69,5 @@
     filter: none!important;
     -webkit-border-radius: 0!important;
 }
+
+

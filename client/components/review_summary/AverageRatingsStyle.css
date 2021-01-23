@@ -1,0 +1,49 @@
+/* need to fix the spacing issue between overall and the stars */
+.average-container {
+  /* background-color: purple; */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  flex: 3;
+  /* position: relative; */
+  padding-top: 15px;
+  /* margin: -1px 0 0;
+  padding: 1rem .5rem; */
+  line-height: 1.333;
+  font-weight: 600;
+  letter-spacing: -.16px;
+  color: #292929!important;
+  font-size: 16px!important;
+  font-family: "Roboto","Helvetica Neue","Helvetica","Arial",sans-serif!important;
+  font-style: normal!important;
+  font-weight: 400!important;
+  font-variant: normal!important;
+  text-decoration: none!important;
+  text-transform: none!important;
+}
+
+.overall {
+    display: grid;
+    grid-template-columns: 8% 20% 10%;
+    grid-column-gap: 1em;
+    line-height: 18px;
+    padding-left: 8px;
+    padding-top: 10px;
+    padding-bottom: 20px;
+    align-items: center;
+    /* background-color: blue; */
+}
+
+/* .star-summary { */
+  /* flex: 1;
+  background-color: grey;
+}
+
+.star-icons {
+  background-color: blue;
+}
+.average-ratings {
+  flex: 1;
+  background-color: pink;
+} */
+
