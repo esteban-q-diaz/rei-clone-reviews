@@ -25,7 +25,8 @@
 }
 
 .userDetails {
-  flex: 1;
+  flex-basis: 27%;
+  padding: 10px
   /* background: orange; */
 }
 
@@ -36,7 +37,12 @@
 
 .review-name {
   padding-top: 20px;
-  padding-bottom: 10px;
+  padding-bottom: 18px;
+  font-size: 16px;
+}
+
+.review-total {
+  padding-top: 15px;
 }
 
 /* styling for the star section - created the star sections own flexbox so it can line as rows vs columns */
@@ -55,10 +61,12 @@
 .review-date {
   flex: 2;
   align-items: center;
+  font-size: 14px;
 }
 
-.review-title {
-  padding-bottom: 10px;
+.review-title-details {
+  padding: 2px 0px 10px 0px;
+  font-size: 19px;
 }
 
 .review-description {
@@ -70,18 +78,25 @@
   display: flex;
   flex-direction: row;
   align-items: center;
+  padding-top: 25px;
 }
 
 .age-info {
-  flex: .11;
+  flex-basis: 5.5%;
   align-items: center;
+  font-size: 11px;
   padding-bottom: 20px;
+
 }
 
 .age-number {
-  flex: 2;
+  flex-basis: 30%;
   align-items: center;
+  font-size: 17px;
+  padding-bottom: 20px;
 }
+
+
 
 /* styling for the helpful section - created the helpful sections own flexbox so it can line as rows vs columns */
 .flex-helpful-sentence{
@@ -91,8 +106,9 @@
 }
 
 .yes-no {
-  flex: .2;
+  flex-basis: 7%;
   align-items: center;
+  font-size: 11px;
 }
 
 .sentence {
@@ -120,7 +136,7 @@
 }
 
 .helpful {
-  flex-basis: 12%;
+  flex-basis: 10%;
   /* background: orange; */
 }
 

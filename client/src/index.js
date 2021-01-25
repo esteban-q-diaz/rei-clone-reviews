@@ -37,6 +37,7 @@ class App extends React.Component {
       threeStarReviews: [],
       twoStarReviews: [],
       oneStarReviews: [],
+      pagination: 1,
     };
     this.sortRatings = this.sortRatings.bind(this);
     this.onHelpfulClick = this.onHelpfulClick.bind(this);
@@ -92,24 +93,28 @@ class App extends React.Component {
       });
   }
 
-    /* ----- LOADMORE ITEMS -----*/
-    loadMoreItems(e) {
-      e.preventDefault();
-        axios.get(`http://localhost:3000/api/loadmore/${this.state.currentItem}`)
-        .then((res) => {
-          this.setState({
-            currentReview: res.data,
-            currentReviewTwo: res.data,
-          });
-          if (this.state.count === false) {
-            console.log('i am herrrrrrreee')
-            this.countRatings();
-          }
-        })
-        .catch((err) => {
-          console.log('error at get item reviews');
+  /* ----- LOADMORE ITEMS -----*/
+  loadMoreItems(e) {
+    const { currentItem, pagination, currentReview, count } = this.state;
+    e.preventDefault();
+    axios.get(`http://localhost:3000/api/loadmore/${currentItem}/?page=${pagination}&limit=12`)
+      .then((res) => {
+        this.setState({
+          currentReview: [...currentReview, ...res.data],
+          currentReviewTwo: [...currentReview, ...res.data],
         });
-    }
+        this.setState({
+          pagination: pagination + 1,
+        });
+        if (count === false) {
+          console.log('i am herrrrrrreee')
+          this.countRatings();
+        }
+      })
+      .catch((err) => {
+        console.log('error at get item reviews: ', err);
+      });
+  }
 
   /* ----- FORM CLICK -----*/
   submitForm(e, submitData) {
@@ -122,29 +127,32 @@ class App extends React.Component {
 
   /* ----- COUNT HOW MANY STARS EACH LEVEL (1-5) HAS -----*/
   countRatings() {
-    const { currentReview, ratingsCount } = this.state;
+    const { fullReviews, currentReview, ratingsCount, currentItem } = this.state;
     let occur = 0;
-    currentReview.map((items) => {
+    //changed from curent to full reviews
+    fullReviews.map((items) => {
       items.reviews.map((reviews) => {
-        if (reviews.stars === 1) {
-          ratingsCount.one += 1;
-          occur += 1;
-        }
-        if (reviews.stars === 2) {
-          ratingsCount.two += 1;
-          occur += 1;
-        }
-        if (reviews.stars === 3) {
-          ratingsCount.three += 1;
-          occur += 1;
-        }
-        if (reviews.stars === 4) {
-          ratingsCount.four += 1;
-          occur += 1;
-        }
-        if (reviews.stars === 5) {
-          ratingsCount.five += 1;
-          occur += 1;
+        if (items.productId === currentItem) {
+          if (reviews.stars === 1) {
+            ratingsCount.one += 1;
+            occur += 1;
+          }
+          if (reviews.stars === 2) {
+            ratingsCount.two += 1;
+            occur += 1;
+          }
+          if (reviews.stars === 3) {
+            ratingsCount.three += 1;
+            occur += 1;
+          }
+          if (reviews.stars === 4) {
+            ratingsCount.four += 1;
+            occur += 1;
+          }
+          if (reviews.stars === 5) {
+            ratingsCount.five += 1;
+            occur += 1;
+          }
         }
       });
     });
@@ -163,10 +171,10 @@ class App extends React.Component {
 
   /* ----- SORT BY RATING STARS -----*/
   sortRatings(e, star) {
-    const { fullReviews } = this.state;
+    const { fullReviews, currentReviewTwo } = this.state;
     e.preventDefault();
     const sortedReviews = [];
-    fullReviews.map((singleReview) => {
+    currentReviewTwo.map((singleReview) => {
       singleReview.reviews.map((items) => {
         if (star === 5 && singleReview.productId === this.state.currentItem && items.stars === 5) {
           sortedReviews.push(singleReview);

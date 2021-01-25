@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import './UserDetails.css';
 import { GrStar } from 'react-icons/gr';
 import './UserDetailsItemsStyle.css';
+import { FaCheckCircle } from 'react-icons/fa';
+import { IconContext } from 'react-icons'
+import { IoMdCloseCircle } from 'react-icons/Io';
 
 function UserDetailsItems({ currentReview, onHelpfulClick, loadMoreItems }) {
   return (
@@ -18,10 +21,12 @@ function UserDetailsItems({ currentReview, onHelpfulClick, loadMoreItems }) {
         {`${currentReview.reviews[0].city},
         ${currentReview.reviews[0].state}`}
       </p>
+      <div className="review-total">
       <p>
-        Review
+        {`Reviews `}
         {currentReview.reviews[0].review_total}
       </p>
+      </div>
       </div>
 
 
@@ -45,7 +50,7 @@ function UserDetailsItems({ currentReview, onHelpfulClick, loadMoreItems }) {
 </div>
 
 
-      <h2 className="review-title">
+      <h2 className="review-title-details">
         {currentReview.reviews[0].title}
       </h2>
       <p className="review-description">
@@ -58,7 +63,7 @@ function UserDetailsItems({ currentReview, onHelpfulClick, loadMoreItems }) {
       <h2>Age:</h2>
       </div>
 
-      <div className="age-info">
+      <div className="age-number">
       <p>
         {currentReview.reviews[0].age}
       </p>
@@ -69,7 +74,34 @@ function UserDetailsItems({ currentReview, onHelpfulClick, loadMoreItems }) {
   <div className="flex-helpful-sentence">
     <div className="yes-no">
       <h2>
-        {currentReview.reviews[0].recommended ? 'Yes,' : 'No,'}
+
+        {currentReview.reviews[0].recommended ?
+        <Fragment>
+         <IconContext.Provider
+      value={{ size: '12px' }}
+    >
+        <FaCheckCircle />
+    </IconContext.Provider>
+          {` Yes,  `}
+        </Fragment>
+        : <Fragment>
+        <IconContext.Provider
+     value={{ size: '15px' }}
+   >
+       <IoMdCloseCircle />
+   </IconContext.Provider>
+         {` No,  `}
+       </Fragment>
+      }
+
+
+
+
+
+
+
+
+
       </h2>
       </div>
 

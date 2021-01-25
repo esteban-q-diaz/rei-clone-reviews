@@ -29,6 +29,7 @@
   line-height: 50px;
   padding-top: 0px;
   padding-bottom: 20px;
+  padding-left: 10px;
   /* background-color: green; */
   letter-spacing: -.16px;
 }
@@ -46,13 +47,14 @@
 
 .starsContainer {
   display: grid;
-  grid-template-columns: 10% 55%;
+  grid-template-columns: 11% 55%;
   grid-column-gap: 1em;
   line-height: 18px;
-  padding-left: 8px;
+  padding-left: 20px;
   padding-top: 10px;
   padding-bottom: 20px;
   align-items: center;
+  min-width: 100px;
   /* background-color: blue; */
 }
 
@@ -68,15 +70,17 @@
   border-radius: 2px;
   padding-top: 10x;
   padding-bottom: 10px;
+  min-width: 80%;
 }
 
+
 .fiveBar {
-  padding-top: 10x;
+  padding-top: 2.31px;
   padding-bottom: 10px;
-  width: 80%;
+  width: 8%;
   background: rgb(10,83,65);
   background: linear-gradient(0deg, rgba(10,83,65,1) 0%, rgba(45,126,106,1) 49%);
-  height: 10%;
+  height: 11%;
   border-radius: 2px;
 }
 

@@ -72,32 +72,25 @@ const getItemReviews = async function (id, callback) {
   }
 };
 
-/* ----- GET CERTAIN ITEM REVIEWS --- */
+/* ----- load more ITEM REVIEWS --- */
 
-const loadMoreItems = async function (id, callback) {
-  var productId = Number(id[0]);
+const loadMoreItems = async function ([id, page, limit], callback) {
+  const productId = Number(id[0]);
   this.currentProductId = productId;
+  const currentPage = Number(page[0]);
+  const currentLimit = Number(limit[0]);
+
+
   try {
-    const results = await ProductReview.find({productId: productId}).sort('reviews.date').limit(80);
+    const results = await ProductReview.find({ productId })
+      .sort('reviews.date')
+      .limit(12)
+      .skip(currentPage * currentLimit);
     callback(null, results);
-  }
-  catch {
+  } catch {
     console.log('error');
   }
 };
-
-
-
-  // var productId = Number(id[0]);
-  // ProductReview.find({productId: productId}, (err, reviews) => {
-  //   if (err) {
-  //     callback(err);
-  //   } else {
-  //     callback(null, reviews);
-  //   }
-  // }).limit(100);
-// };
-
 
 /* -----SAVE REVIEW--- */
 
@@ -121,7 +114,6 @@ const saveReview = function (id, submitData, callback) {
   } else {
     age = submitData.age;
   }
-
 
   if (submitData.recommend !== true || submitData.recommend !== false) {
     submitData.recommend = true;

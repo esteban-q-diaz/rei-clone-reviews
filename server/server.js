@@ -38,7 +38,10 @@ app.get('/api/getitemreviews/:id', (req, res) => {
 
 app.get('/api/loadmore/:id', (req, res) => {
   const id = req.params.id;
-  mongo.loadMoreItems([id], (err, reviews) => {
+  const page = req.query.page
+  const limit = req.query.limit
+
+  mongo.loadMoreItems([id, page, limit], (err, reviews) => {
     if (err) {
       res.send(err);
     } else {

@@ -27,7 +27,7 @@ function randomWord(arr) {
 const seedProduct = () => {
   let reviews = [];
 
-  for (let i = 0; i < 100; i += 1) {
+  for (let i = 0; i < 200; i += 1) {
     const product = randomWord(products);
     const newDate = new Date(faker.date.past(5));
     const year = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(newDate);

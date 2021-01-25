@@ -41,6 +41,22 @@ function ReviewSnapshot({
   threeFilter, twoFilter, oneFilter,
   clear, closeFilterClick, filterClick,
 }) {
+  let five = ratingsCount.five;
+  let four = ratingsCount.four;
+  let three = ratingsCount.three;
+  let two = ratingsCount.two;
+  let one = ratingsCount.one;
+
+  let total = five + four + three + two + one
+
+  let fivePercentage = Math.trunc((five / total) * 100)
+  let fourPercentage = Math.trunc((four / total) * 100)
+  let threePercentage = Math.trunc((three / total) * 100)
+  let twoPercentage = Math.trunc((two / total) * 100)
+  let onePercentage = Math.trunc((one / total) * 100)
+
+
+
   return (
 <div>
     <div className="main">
@@ -54,6 +70,7 @@ function ReviewSnapshot({
               Rating Snapshot
             </p>
             <p className="selectRow">Select a row below to filter reviews.</p>
+            {console.log(typeof fivePercentage, fourPercentage,threePercentage, twoPercentage, onePercentage)}
           </div>
 
 
@@ -62,38 +79,40 @@ function ReviewSnapshot({
           <div className="starsContainer">
             <div className="fiveFilterr" onClick={(e) => { sortRatings(e, 5); }}>
               5 <GrStar />
-              {/* {ratingsCount.five} */}
+              {ratingsCount.five}
             </div>
             <div className="fiveContainer">
-              <div className="fiveBar"></div>
+              <div className="fiveBar" style={{width: `${fivePercentage}%`}}>
+              </div>
+             
             </div>
             <div onClick={(e) => { sortRatings(e, 4); }}>
               4 <GrStar />
-              {/* {ratingsCount.four} */}
+              {ratingsCount.four}
             </div>
             <div className="fiveContainer">
-              <div className="fiveBar"></div>
+              <div className="fiveBar" style={{width: `${fourPercentage}%`}}></div>
             </div>
             <div onClick={(e) => { sortRatings(e, 3); }}>
               3 <GrStar />
-              {/* {ratingsCount.three} */}
+              {ratingsCount.three}
             </div>
             <div className="fiveContainer">
-              <div className="fiveBar"></div>
+              <div className="fiveBar" style={{width: `${threePercentage}%`}}></div>
             </div>
             <div onClick={(e) => { sortRatings(e, 2); }}>
               2 <GrStar />
-              {/* {ratingsCount.two} */}
+              {ratingsCount.two}
             </div>
             <div className="fiveContainer">
-              <div className="fiveBar"></div>
+              <div className="fiveBar" style={{width: `${twoPercentage}%`}}></div>
             </div>
             <div onClick={(e) => { sortRatings(e, 1); }}>
               1 <GrStar />
-              {/* {ratingsCount.one} */}
+              {ratingsCount.one}
             </div>
             <div className="fiveContainer">
-              <div className="fiveBar"></div>
+              <div className="fiveBar" style={{width: `${onePercentage}%`}}></div>
             </div>
             </div>
 
@@ -124,7 +143,7 @@ function ReviewSnapshot({
       <div className="filter-container">
 
         <div className="filter">
-          <p>
+          <p >
             {`1 - `}
             {`${currentReview.length} `}
             {`of `}
