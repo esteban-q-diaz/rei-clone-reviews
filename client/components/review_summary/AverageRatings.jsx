@@ -11,16 +11,20 @@ function AverageRatings({ averageRatings }) {
         <p>Average Customer Ratings</p>
       </div>
 
-
       <div className="overall">
-      <p className="star-summary">
-        Overall </p>
+        <p className="star-summary">
+          Overall
+        </p>
         <p className="star-icons">
-        <GrStar size={20} color='#BE7B2C'/> <GrStar size={20} color='#BE7B2C'/> <GrStar size={20} color='#BE7B2C'/> <GrStar size={20} color='#BE7B2C'/> <GrStar size={20} color='#BE7B2C'/>
+          <GrStar size={20} color='#BE7B2C'/>
+          <GrStar size={20} color='#BE7B2C'/>
+          <GrStar size={20} color='#BE7B2C'/>
+          <GrStar size={20} color='#BE7B2C'/>
+          <GrStar size={20} color='#BE7B2C'/>
         </p>
 
         <p className="average-ratings">
-        { averageRatings }
+          { averageRatings }
         </p>
       </div>
     </div>

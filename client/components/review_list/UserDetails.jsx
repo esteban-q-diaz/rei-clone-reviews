@@ -15,7 +15,7 @@ function UserDetails({ currentReview, onHelpfulClick, loadMoreItems }) {
         />
       ))}
       <div className="load-more-container">
-      <button className="load-more" type="submit" onClick={loadMoreItems}>Load more</button>
+        <button className="load-more" type="submit" onClick={loadMoreItems}>Load more</button>
       </div>
     </div>
   );

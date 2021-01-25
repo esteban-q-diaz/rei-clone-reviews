@@ -99,13 +99,11 @@ app.put('/api/nothelpful', (req, res) => {
 /* ----- SORT BY MORE RECENT --- */
 
 app.get('/api/mostrecent', (req, res) => {
-
-  // mongo.sortMostRevent()
   mongo.sortMostRevent((err, reviews) => {
     if (err) {
       res.send(err);
     } else {
-      res.status(200).send(reviews)
+      res.status(200).send(reviews);
     }
   });
 });

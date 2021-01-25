@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import Form from './Form';
-import Modal from './Modal.jsx';
+import Modal from './Modal';
 import './ReviewListHeader.css';
 import './ModalStyle.css';
 
@@ -12,11 +11,9 @@ const Header = styled.div`
   color: #4A4846;
   position: relative;
   margin: -1px 0 0;
-  /* padding: 1rem .5rem; */
   cursor: pointer;
   font-size: 1.2rem;
   font-family: Stuart,Georgia,serif;
-  /* font-size: 2.843rem; */
   line-height: 1.333;
   font-weight: 600;
   letter-spacing: -.16px;
@@ -26,8 +23,6 @@ function ReviewListHeader({ submitForm, currentReview }) {
   const [clicked, setClick] = useState(false);
 
   function manageClick() {
-    // e.preventDefault()
-    // console.log('clickeed')
     setClick(prevState => prevState = true);
   }
 
@@ -40,7 +35,6 @@ function ReviewListHeader({ submitForm, currentReview }) {
 
   return (
     <div>
-
       <Header>
         <h2>Reviews</h2>
       </Header>
@@ -49,27 +43,16 @@ function ReviewListHeader({ submitForm, currentReview }) {
           Write A Review
         </button>
       </div>
-      {/* {
-          clicked ? (
-            <Form
-              currentReview={currentReview}
-              closeForm={closeForm}
-              submitForm={submitForm}
-            />
-
-          )
-            : null
-        } */}
-        {
-          clicked ? (
-            <Modal  currentReview={currentReview}
+      {
+        clicked ? (
+          <Modal
+            currentReview={currentReview}
             closeForm={closeForm}
-            submitForm={submitForm}/>
-
-          )
-            : null
+            submitForm={submitForm}
+          />
+        )
+          : null
         }
-
     </div>
   );
 }

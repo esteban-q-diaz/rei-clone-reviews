@@ -32,14 +32,6 @@
 }
 
 .load-more-container {
-  /* background: #ffffff;
-  border: solid;
-  border-width: .5px;
-  border-color: #B8B8B8;
-  padding: 50px;
-  border-radius: 2px;
-  align-items: center;
-  text-align: center; */
   display: flex;
   flex-direction: column;
   justify-content: center;
