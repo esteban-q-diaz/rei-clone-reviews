@@ -228,7 +228,9 @@ class App extends React.Component {
           }));
 
     };
-    setTimeout(function(){ asyncFunc();}, 1)
+    setTimeout(function(){
+      asyncFunc()
+      ;}, 1)
   }
 
   /* ----- UNFILTER / DELETE FILTER BOX -----*/
@@ -404,7 +406,7 @@ class App extends React.Component {
 
   render() {
     const {
-      isLoaded, fullReviews, currentReview, ratingsCount, averageRatings, currentItem, filters, fiveFilter, fourFilter, threeFilter, twoFilter, oneFilter, clear
+      isLoaded, fullReviews, currentReview, ratingsCount, averageRatings, currentItem, filters, fiveFilter, fourFilter, threeFilter, twoFilter, oneFilter, clear, doneFiltering
     } = this.state;
     return (
       // eslint-disable-next-line react/jsx-filename-extension
@@ -444,6 +446,7 @@ class App extends React.Component {
               currentReview={currentReview}
               onHelpfulClick={this.onHelpfulClick}
               loadMoreItems={this.loadMoreItems}
+              doneFiltering={doneFiltering}
             />
           )
             : null

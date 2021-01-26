@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import './UserDetails.css';
 import { GrStar } from 'react-icons/gr';
@@ -8,6 +8,39 @@ import { IconContext } from 'react-icons'
 import { IoMdCloseCircle } from 'react-icons/Io';
 
 function UserDetailsItems({ currentReview, onHelpfulClick }) {
+  const [fiveStar, setFiveStar] = useState(false);
+  const [fourStar, setFourStar] = useState(false);
+  const [threeStar, setThreeStar] = useState(false);
+  const [twoStar, setTwoStar] = useState(false);
+  const [oneStar, setOneStar] = useState(false);
+  const [count, setCount] = useState(0);
+
+  // Theres a bug that happens whenever u sort
+  function checkStarRating() {
+    if (currentReview.reviews[0].stars === 5) {
+      setFiveStar (prevState => prevState = true);
+    }
+    if (currentReview.reviews[0].stars === 4) {
+      setFourStar (prevState => prevState = true);
+    }
+    if (currentReview.reviews[0].stars === 3) {
+      setThreeStar (prevState => prevState = true);
+    }
+    if (currentReview.reviews[0].stars === 2) {
+      setTwoStar (prevState => prevState = true);
+    }
+    if (currentReview.reviews[0].stars === 1) {
+      setOneStar (prevState => prevState = true);
+    }
+  }
+
+  useEffect(() => {
+    if (count === 0) {
+      checkStarRating();
+      setCount(prevState => prevState + 1);
+    }
+  });
+
   return (
     <div className="userContainer">
 
@@ -31,20 +64,84 @@ function UserDetailsItems({ currentReview, onHelpfulClick }) {
         <div className="detailsContainer">
 
           <div className="flexstars">
-    <div className="starfilters">
-      <h2><GrStar size={20} color='#BE7B2C'/> <GrStar size={20} color='#BE7B2C'/> <GrStar size={20} color='#BE7B2C'/> <GrStar size={20} color='#BE7B2C'/> <GrStar size={20} color='#BE7B2C'/></h2>
-      <h3>
-        {/* {`${currentReview.reviews[0].stars} `}
-        Stars */}
-      </h3>
-    </div>
+            <div className="starfilters">
+              {
+              fiveStar ? (
+                // eslint-disable-next-line react/jsx-fragments
+                <Fragment>
+                  <GrStar size={20} color="#BE7B2C" />
+                  <GrStar size={20} color="#BE7B2C" />
+                  <GrStar size={20} color="#BE7B2C" />
+                  <GrStar size={20} color="#BE7B2C" />
+                  <GrStar size={20} color="#BE7B2C" />
+                </Fragment>
+              )
+                : null
+              }
+              {
+              fourStar ? (
+                // eslint-disable-next-line react/jsx-fragments
+                <Fragment>
+                  <GrStar size={20} color="#BE7B2C" />
+                  <GrStar size={20} color="#BE7B2C" />
+                  <GrStar size={20} color="#BE7B2C" />
+                  <GrStar size={20} color="#BE7B2C" />
+                  <GrStar size={20} color="#B8B8B8" />
+                </Fragment>
+              )
+                : null
+              }
+              {
+              threeStar ? (
+                // eslint-disable-next-line react/jsx-fragments
+                <Fragment>
+                  <GrStar size={20} color="#BE7B2C" />
+                  <GrStar size={20} color="#BE7B2C" />
+                  <GrStar size={20} color="#BE7B2C" />
+                  <GrStar size={20} color="#B8B8B8" />
+                  <GrStar size={20} color="#B8B8B8" />
+                </Fragment>
+              )
+                : null
+              }
+              {
+              twoStar ? (
+                // eslint-disable-next-line react/jsx-fragments
+                <Fragment>
+                  <GrStar size={20} color="#BE7B2C" />
+                  <GrStar size={20} color="#BE7B2C" />
+                  <GrStar size={20} color="#B8B8B8" />
+                  <GrStar size={20} color="#B8B8B8" />
+                  <GrStar size={20} color="#B8B8B8" />
+                </Fragment>
+              )
+                : null
+              }
+              {
+              oneStar ? (
+                // eslint-disable-next-line react/jsx-fragments
+                <Fragment>
+                  <GrStar size={20} color="#BE7B2C" />
+                  <GrStar size={20} color="#B8B8B8" />
+                  <GrStar size={20} color="#B8B8B8" />
+                  <GrStar size={20} color="#B8B8B8" />
+                  <GrStar size={20} color="#B8B8B8" />
+                </Fragment>
+              )
+                : null
+              }
+              <h3>
+                {`${currentReview.reviews[0].stars} `}
+                Stars
+              </h3>
+            </div>
 
-    <div className="review-date">
-      <p>
-      {` •  ${currentReview.reviews[0].date}`}
-      </p>
-    </div>
-</div>
+            <div className="review-date">
+              <p>
+                {` •  ${currentReview.reviews[0].date}`}
+              </p>
+            </div>
+          </div>
 
           <h2 className="review-title-details">
             {currentReview.reviews[0].title}
@@ -129,7 +226,6 @@ UserDetailsItems.defaultProps = {
 
 UserDetailsItems.propTypes = {
   onHelpfulClick: PropTypes.func,
-  loadMoreItems: PropTypes.func,
   currentReview: PropTypes.instanceOf(Object).isRequired,
 };
 

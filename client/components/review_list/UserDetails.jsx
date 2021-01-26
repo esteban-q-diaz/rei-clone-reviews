@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import UserDetailsItems from './UserDetailsItems';
 
-function UserDetails({ currentReview, onHelpfulClick, loadMoreItems }) {
+function UserDetails({ currentReview, onHelpfulClick, loadMoreItems, doneFiltering}) {
   return (
     <div>
       {currentReview.map((reviews, index) => (
@@ -12,6 +12,7 @@ function UserDetails({ currentReview, onHelpfulClick, loadMoreItems }) {
           // eslint-disable-next-line react/no-array-index-key
           key={index}
           loadMoreItems={loadMoreItems}
+          doneFiltering={doneFiltering}
         />
       ))}
       <div className="load-more-container">

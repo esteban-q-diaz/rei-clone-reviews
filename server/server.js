@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const PORT = 3000;
+const path = require('path')
 const mongo = require('../database/product_reviews.js');
 const cors = require('cors');
 var bodyParser = require('body-parser');
@@ -8,6 +9,9 @@ var bodyParser = require('body-parser');
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+
+//this is needed to make the public folder available to the server
+app.use('/', express.static(path.join(__dirname, '..', 'public')));
 
 /* ----- GET ALL REVIEWS --- */
 
@@ -163,7 +167,6 @@ app.get('/api/mostrelevant', (req, res) => {
     }
   });
 });
-
 
 app.listen(PORT, (err) => {
   if (err) {
