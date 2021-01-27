@@ -94,7 +94,6 @@ const loadMoreItems = async function ([id, page, limit], callback) {
 /* -----SAVE REVIEW--- */
 
 const saveReview = function (id, submitData, callback) {
-  console.log("products:", submitData.recommend)
   let productName;
   let url;
   let age;
@@ -120,7 +119,6 @@ const saveReview = function (id, submitData, callback) {
   let slicedLocation = submitData.location.split(',')
   let city = slicedLocation[0]
   let state = slicedLocation[1]
-console.log('sliced', city, "state", state);
   // figure out a way to get username review to increment
   const sampleReview = new ProductReview({
     productId: Number(id),
@@ -187,7 +185,6 @@ const notHelpfulCount = function (param, callback) {
 
 const sort = async function([star, limit], callback) {
   // refactor this
-  console.log(star, limit)
     try {
       const results = await ProductReview.find({'reviews.stars': star}).sort('reviews.date').limit(limit);
       callback(null, results);

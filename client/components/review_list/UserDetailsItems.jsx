@@ -58,7 +58,6 @@ function UserDetailsItems({ currentReview, onHelpfulClick }) {
             <p>
               {'Reviews '}
               {currentReview.reviews[0].review_total}
-              {` stars: ${currentReview.reviews[0].stars}`}
             </p>
           </div>
         </div>

@@ -109,7 +109,6 @@ app.put('/api/nothelpful', (req, res) => {
     if (err) {
       res.send(err);
     } else {
-      console.log('helpful count updated');
       res.status(202).send(data);
     }
   });
