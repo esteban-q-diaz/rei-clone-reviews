@@ -15,7 +15,7 @@ function UserDetailsItems({ currentReview, onHelpfulClick }) {
   const [oneStar, setOneStar] = useState(false);
   const [count, setCount] = useState(0);
 
-  // Theres a bug that happens whenever u sort
+  // Theres a bug that happens whenever u sort by star rating the star amounts get all messed up
   function checkStarRating() {
     if (currentReview.reviews[0].stars === 5) {
       setFiveStar (prevState => prevState = true);
@@ -58,6 +58,7 @@ function UserDetailsItems({ currentReview, onHelpfulClick }) {
             <p>
               {'Reviews '}
               {currentReview.reviews[0].review_total}
+              {` stars: ${currentReview.reviews[0].stars}`}
             </p>
           </div>
         </div>
@@ -130,10 +131,10 @@ function UserDetailsItems({ currentReview, onHelpfulClick }) {
               )
                 : null
               }
-              <h3>
+              {/* <h3>
                 {`${currentReview.reviews[0].stars} `}
                 Stars
-              </h3>
+              </h3> */}
             </div>
 
             <div className="review-date">

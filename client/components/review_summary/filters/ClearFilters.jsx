@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 function ClearFilters({ closeFilterClick }) {
   return (
     <div>
-      <button type="submit" onClick={(e) => closeFilterClick(e, 'clear')}>Clear All x </button>
+      <button className="clear-button"  type="submit" onClick={(e) => closeFilterClick(e, 'clear')}>Clear All x </button>
     </div>
   );
 }

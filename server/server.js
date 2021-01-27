@@ -85,6 +85,21 @@ app.put('/api/helpful', (req, res) => {
   });
 });
 
+/* ----- SORT BY-- */
+app.put('/api/sort', (req, res) => {
+  const { star } = req.body;
+  const { limit } = req.body;
+
+  mongo.sort([star, limit], (err, data) => {
+    if (err) {
+      res.send(err);
+    } else {
+      console.log('helpful count updated');
+      res.status(202).send(data);
+    }
+  });
+});
+
 /* ----- NOT HELPFUL BUTON COUNT-- */
 
 app.put('/api/nothelpful', (req, res) => {
@@ -102,8 +117,10 @@ app.put('/api/nothelpful', (req, res) => {
 
 /* ----- SORT BY MORE RECENT --- */
 
-app.get('/api/mostrecent', (req, res) => {
-  mongo.sortMostRevent((err, reviews) => {
+app.post('/api/mostrecent', (req, res) => {
+  let sortLimit = req.body.sortLimit;
+
+  mongo.sortMostRecent(sortLimit, (err, reviews) => {
     if (err) {
       res.send(err);
     } else {
@@ -114,10 +131,10 @@ app.get('/api/mostrecent', (req, res) => {
 
 /* ----- SORT BY H2L RECENT --- */
 
-app.get('/api/hightolow', (req, res) => {
-
+app.post('/api/hightolow', (req, res) => {
+  let sortLimit = req.body.sortLimit;
   // mongo.sortMostRevent()
-  mongo.highToLow((err, reviews) => {
+  mongo.highToLow(sortLimit, (err, reviews) => {
     if (err) {
       res.send(err);
     } else {
@@ -128,10 +145,10 @@ app.get('/api/hightolow', (req, res) => {
 
 /* ----- SORT BY L2H RECENT --- */
 
-app.get('/api/lowtohigh', (req, res) => {
-
+app.post('/api/lowtohigh', (req, res) => {
+  let sortLimit = req.body.sortLimit;
   // mongo.sortMostRevent()
-  mongo.lowToHigh((err, reviews) => {
+  mongo.lowToHigh(sortLimit, (err, reviews) => {
     if (err) {
       res.send(err);
     } else {
@@ -142,10 +159,10 @@ app.get('/api/lowtohigh', (req, res) => {
 
 /* ----- SORT BY MOST HELPFUL --- */
 
-app.get('/api/mosthelpful', (req, res) => {
-
+app.post('/api/mosthelpful', (req, res) => {
+  let sortLimit = req.body.sortLimit;
   // mongo.sortMostRevent()
-  mongo.mostHelpful((err, reviews) => {
+  mongo.mostHelpful(sortLimit, (err, reviews) => {
     if (err) {
       res.send(err);
     } else {
@@ -156,10 +173,10 @@ app.get('/api/mosthelpful', (req, res) => {
 
 /* ----- SORT BY MOST RELEVANT --- */
 
-app.get('/api/mostrelevant', (req, res) => {
-
+app.post('/api/mostrelevant', (req, res) => {
+  let sortLimit = req.body.sortLimit;
   // mongo.sortMostRevent()
-  mongo.mostRelevant((err, reviews) => {
+  mongo.mostRelevant(sortLimit, (err, reviews) => {
     if (err) {
       res.send(err);
     } else {

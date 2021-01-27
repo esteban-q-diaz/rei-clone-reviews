@@ -19,6 +19,7 @@ class App extends React.Component {
       count: false,
       fullReviews: [],
       currentReview: [],
+      currentReviewCount: 0,
       // eslint-disable-next-line react/no-unused-state
       currentReviewTwo: [],
       ratingsCount: {
@@ -32,12 +33,8 @@ class App extends React.Component {
       twoFilter: false,
       oneFilter: false,
       clear: false,
-      fiveStarReviews: [],
-      fourStarReviews: [],
-      threeStarReviews: [],
-      twoStarReviews: [],
-      oneStarReviews: [],
       pagination: 1,
+      sortedTotal: [],
     };
     this.sortRatings = this.sortRatings.bind(this);
     this.onHelpfulClick = this.onHelpfulClick.bind(this);
@@ -73,8 +70,14 @@ class App extends React.Component {
 
   /* ----- GET REIVEWS FOR ONE ITEM -----*/
   getItemReviews() {
-    const { count } = this.state;
+    const { count, fullReviews, currentItem } = this.state;
     const index = Math.floor(Math.random() * 5) + 1;
+    let totalCount = 0;
+    fullReviews.map((reviews) => {
+      if (reviews.productId === index) {
+        totalCount++
+      }
+    });
     axios.get(`http://localhost:3000/api/getitemreviews/${index}`)
       .then((res) => {
         this.setState({
@@ -82,6 +85,7 @@ class App extends React.Component {
           currentReview: res.data,
           // eslint-disable-next-line react/no-unused-state
           currentReviewTwo: res.data,
+          currentReviewCount: totalCount,
         });
         if (count === false) {
           console.log('i am herrrrrrreee');
@@ -107,7 +111,6 @@ class App extends React.Component {
           pagination: pagination + 1,
         });
         if (count === false) {
-          console.log('i am herrrrrrreee')
           this.countRatings();
         }
       })
@@ -127,9 +130,11 @@ class App extends React.Component {
 
   /* ----- COUNT HOW MANY STARS EACH LEVEL (1-5) HAS -----*/
   countRatings() {
-    const { fullReviews, currentReview, ratingsCount, currentItem } = this.state;
+    const {
+      fullReviews, ratingsCount, currentItem,
+    } = this.state;
     let occur = 0;
-    //changed from curent to full reviews
+    // changed from curent to full reviews
     fullReviews.map((items) => {
       items.reviews.map((reviews) => {
         if (items.productId === currentItem) {
@@ -171,118 +176,175 @@ class App extends React.Component {
 
   /* ----- SORT BY RATING STARS -----*/
   sortRatings(e, star) {
-    const { fullReviews, currentReviewTwo } = this.state;
     e.preventDefault();
-    const sortedReviews = [];
+    let starLimitCount = 0;
+    const { currentReviewTwo, sortedTotal } = this.state;
     currentReviewTwo.map((singleReview) => {
       singleReview.reviews.map((items) => {
-        if (star === 5 && singleReview.productId === this.state.currentItem && items.stars === 5) {
-          sortedReviews.push(singleReview);
+        if (items.stars === star) {
+          // eslint-disable-next-line no-plusplus
+          starLimitCount++;
+        }
+      });
+    });
+    axios.put('http://localhost:3000/api/sort', { star, limit: starLimitCount })
+      .then((res) => {
+        this.setState({
+          currentReview: [...sortedTotal, ...res.data],
+          sortedTotal: [...sortedTotal, ...res.data],
+        });
+        // Make the filter boxes appear
+        if (star === 5) {
           this.setState({
-            fiveStarReviews: sortedReviews,
             fiveFilter: true,
             clear: true,
           });
         }
-        if (star === 4 && singleReview.productId === this.state.currentItem && items.stars === 4) {
-          sortedReviews.push(singleReview);
+        if (star === 4) {
           this.setState({
-            fourStarReviews: sortedReviews,
             fourFilter: true,
             clear: true,
-          })
+          });
         }
-        if (star === 3 && singleReview.productId === this.state.currentItem && items.stars === 3) {
-          sortedReviews.push(singleReview);
+        if (star === 3) {
           this.setState({
-            threeStarReviews: sortedReviews,
             threeFilter: true,
             clear: true,
-          })
+          });
         }
-        if (star === 2 && singleReview.productId === this.state.currentItem && items.stars === 2) {
-          sortedReviews.push(singleReview);
+        if (star === 2) {
           this.setState({
-            twoStarReviews: sortedReviews,
             twoFilter: true,
             clear: true,
-          })
+          });
         }
-        if (star === 1 && singleReview.productId === this.state.currentItem && items.stars === 1) {
-          sortedReviews.push(singleReview);
+        if (star === 1) {
           this.setState({
-            oneStarReviews: sortedReviews,
             oneFilter: true,
             clear: true,
           });
         }
-      });
-    });
-    // refactor to use async or promises
-    // waits til all the setStates above have been updated then if makes currentReview have only the filtered
-    let asyncFunc = () => {
-      let filtered = [...this.state.fiveStarReviews, ...this.state.fourStarReviews, ...this.state.threeStarReviews, ...this.state.twoStarReviews, ...this.state.oneStarReviews]
-
-      this.setState((prevState) => ({
-            currentReview: filtered,
-          }));
-
-    };
-    setTimeout(function(){
-      asyncFunc()
-      ;}, 1)
+      })
+      .catch(err => console.log('Error at Sort Ratings', err));
   }
 
   /* ----- UNFILTER / DELETE FILTER BOX -----*/
   closeFilterClick(e, num) {
     e.preventDefault();
-    const {oneFilter, twoFilter, threeFilter, fourFilter, fiveFilter} = this.state;
+    const {
+      oneFilter,
+      twoFilter,
+      threeFilter,
+      fourFilter,
+      fiveFilter,
+      currentReview,
+      currentReviewTwo,
+    } = this.state;
     if (num === 1) {
+      let filtered = [];
+      currentReview.map((reviews) => {
+        if (reviews.reviews[0].stars !== 1) {
+          filtered.push(reviews);
+        }
+      });
       this.setState({
         oneFilter: false,
-        oneStarReviews: [],
+        currentReview: filtered,
       });
-      if (twoFilter === false && threeFilter === false && fourFilter === false && fiveFilter === false) {
-        this.getAllReviews();
+
+      if (twoFilter === false
+        && threeFilter === false
+        && fourFilter === false
+        && fiveFilter === false) {
+        this.setState({
+          currentReview: currentReviewTwo,
+        });
       }
     }
     if (num === 2) {
+      let filtered = [];
+      currentReview.map((reviews) => {
+        if (reviews.reviews[0].stars !== 2) {
+          filtered.push(reviews);
+        }
+      });
       this.setState({
         twoFilter: false,
-        twoStarReviews: [],
+        currentReview: filtered,
       });
-      if (oneFilter === false && threeFilter === false && fourFilter === false && fiveFilter === false) {
-        this.getAllReviews();
+
+      if (oneFilter === false
+        && threeFilter === false
+        && fourFilter === false
+        && fiveFilter === false) {
+        this.setState({
+          currentReview: currentReviewTwo,
+        });
       }
     }
     if (num === 3) {
+      let filtered = [];
+      currentReview.map((reviews) => {
+        if (reviews.reviews[0].stars !== 3) {
+          filtered.push(reviews);
+        }
+      });
       this.setState({
         threeFilter: false,
-        threeStarReviews: [],
+        currentReview: filtered,
       });
-      if (oneFilter === false && twoFilter === false && fourFilter === false && fiveFilter === false) {
-        this.getAllReviews();
+
+      if (twoFilter === false
+        && oneFilter === false
+        && fourFilter === false
+        && fiveFilter === false) {
+        this.setState({
+          currentReview: currentReviewTwo,
+        });
       }
     }
     if (num === 4) {
+      let filtered = [];
+      currentReview.map((reviews) => {
+        if (reviews.reviews[0].stars !== 4) {
+          filtered.push(reviews);
+        }
+      });
       this.setState({
         fourFilter: false,
-        fourStarReviews: [],
+        currentReview: filtered,
       });
-      if (oneFilter === false && twoFilter === false && threeFilter === false && fiveFilter === false) {
-        this.getAllReviews();
+
+      if (twoFilter === false
+        && threeFilter === false
+        && oneFilter === false
+        && fiveFilter === false) {
+        this.setState({
+          currentReview: currentReviewTwo,
+        });
       }
     }
     if (num === 5) {
+      let filtered = [];
+      currentReview.map((reviews) => {
+        if (reviews.reviews[0].stars !== 5) {
+          filtered.push(reviews);
+        }
+      });
       this.setState({
         fiveFilter: false,
-        fiveStarReviews: [],
+        currentReview: filtered,
       });
-      if (oneFilter === false && twoFilter === false && threeFilter === false && fourFilter === false) {
-        this.getAllReviews();
+
+      if (twoFilter === false
+        && threeFilter === false
+        && fourFilter === false
+        && oneFilter === false) {
+        this.setState({
+          currentReview: currentReviewTwo,
+        });
       }
     }
-    // refactor this here
     if (num === 'clear' || twoFilter === false && threeFilter === false && fourFilter === false && fiveFilter === false) {
       this.setState({
         fiveFilter: false,
@@ -291,87 +353,78 @@ class App extends React.Component {
         twoFilter: false,
         oneFilter: false,
         clear: false,
-        fiveStarReviews: [],
-        fourStarReviews: [],
-        threeStarReviews: [],
-        twoStarReviews: [],
-        oneStarReviews: [],
+        currentReview: currentReviewTwo,
       });
-      this.getAllReviews();
     }
-    this.sortRatings(e);
   }
 
   /* ----- SORT DROP DOWN FUNCTIONS -----*/
   filterClick(e) {
-    e.preventDefault()
-    console.log('filter clicked', e.target.value)
+    e.preventDefault();
+    const { currentReviewTwo } = this.state
+    let sortLimit = currentReviewTwo.length;
     if (e.target.value === 'mostRecent') {
-      axios.get(`http://localhost:3000/api/mostrecent`)
-      .then((res) => {
-        console.log('filter clicked successs', res.data)
-        this.setState({
-          currentReview: res.data,
+      axios.post(`http://localhost:3000/api/mostrecent`, { sortLimit })
+        .then((res) => {
+          this.setState({
+            currentReview: res.data,
+          });
+        })
+        .catch((err) => {
+          console.log('error at get most recent', err);
         });
-      })
-      .catch((err) => {
-        console.log('error at get most recent');
-      });
     }
     if (e.target.value === 'highToLow') {
-      axios.get(`http://localhost:3000/api/hightolow`)
-      .then((res) => {
-        this.setState({
-          currentReview: res.data,
+      axios.post(`http://localhost:3000/api/hightolow`, { sortLimit })
+        .then((res) => {
+          this.setState({
+            currentReview: res.data,
+          });
+        })
+        .catch((err) => {
+          console.log('error at get most recent', err);
         });
-      })
-      .catch((err) => {
-        console.log('error at get most recent');
-      });
     }
     if (e.target.value === 'lowToHigh') {
-      axios.get(`http://localhost:3000/api/lowtohigh`)
-      .then((res) => {
-        console.log('filter l2hclicked successs', res.data);
-        this.setState({
-          currentReview: res.data,
+      axios.post(`http://localhost:3000/api/lowtohigh`, { sortLimit })
+        .then((res) => {
+          this.setState({
+            currentReview: res.data,
+          });
+        })
+        .catch((err) => {
+          console.log('error at get most recent', err);
         });
-      })
-      .catch((err) => {
-        console.log('error at get most recent');
-      });
     }
     if (e.target.value === 'mostHelpful') {
-      axios.get(`http://localhost:3000/api/mosthelpful`)
-      .then((res) => {
-        this.setState({
-          currentReview: res.data,
+      axios.post(`http://localhost:3000/api/mosthelpful`, { sortLimit })
+        .then((res) => {
+          this.setState({
+            currentReview: res.data,
+          });
+        })
+        .catch((err) => {
+          console.log('error at get most recent', err);
         });
-      })
-      .catch((err) => {
-        console.log('error at get most recent');
-      });
     }
     if (e.target.value === 'mostRelevant') {
-      axios.get(`http://localhost:3000/api/mostrelevant`)
-      .then((res) => {
-        console.log('filter most relevant clicked successs', res.data);
-        this.setState({
-          currentReview: res.data,
+      axios.post(`http://localhost:3000/api/mostrelevant`, { sortLimit })
+        .then((res) => {
+          console.log('filter most relevant clicked successs', res.data);
+          this.setState({
+            currentReview: res.data,
+          });
+        })
+        .catch((err) => {
+          console.log('error at get most recent', err);
         });
-      })
-      .catch((err) => {
-        console.log('error at get most recent');
-      });
     }
   }
-
 
   /* -----HELPFUL BUTON COUNT-- */
   // eslint-disable-next-line react/sort-comp
   onHelpfulClick(e, type, reviewId) {
     e.preventDefault();
-    console.log(this.state.currentItem);
     if (type === 'yes') {
       axios.put('http://localhost:3000/api/helpful', { reviewId })
         .then((res) => {
@@ -393,20 +446,35 @@ class App extends React.Component {
 
   /* ----- UPDATE HELPFUL COUNT IMMEDIATELY-----*/
   updateHelpfulClick() {
-    axios.get(`http://localhost:3000/api/getitemreviews/${this.state.currentItem}`)
+    const { currentItem } = this.state;
+    axios.get(`http://localhost:3000/api/getitemreviews/${currentItem}`)
       .then((res) => {
         this.setState({
           currentReview: res.data,
         });
       })
       .catch((err) => {
-        console.log('error at get item reviews');
+        console.log('error at get item reviews', err);
       });
   }
 
   render() {
     const {
-      isLoaded, fullReviews, currentReview, ratingsCount, averageRatings, currentItem, filters, fiveFilter, fourFilter, threeFilter, twoFilter, oneFilter, clear, doneFiltering
+      isLoaded,
+      fullReviews,
+      currentReview,
+      ratingsCount,
+      averageRatings,
+      currentItem,
+      filters,
+      fiveFilter,
+      fourFilter,
+      threeFilter,
+      twoFilter,
+      oneFilter,
+      clear,
+      doneFiltering,
+      currentReviewCount,
     } = this.state;
     return (
       // eslint-disable-next-line react/jsx-filename-extension
@@ -433,6 +501,7 @@ class App extends React.Component {
               twoFilter={twoFilter}
               oneFilter={oneFilter}
               clear={clear}
+              currentReviewCount={currentReviewCount}
               closeFilterClick={this.closeFilterClick}
               filterClick={this.filterClick}
             />
@@ -456,6 +525,6 @@ class App extends React.Component {
   }
 }
 
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render(<App />, document.getElementById('reviews'));
 
 export default App;

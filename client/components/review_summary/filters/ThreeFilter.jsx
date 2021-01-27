@@ -1,10 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { IoIosCloseCircle } from "react-icons/io";
 
 function ThreeFilter({ closeFilterClick }) {
   return (
     <div>
-      <button type="submit" onClick={(e) => closeFilterClick(e, 3)}>3 Stars x </button>
+      <button className="filter-button" type="submit" onClick={(e) => closeFilterClick(e, 2)}>
+        {'3 Stars '}
+        <IoIosCloseCircle />
+      </button>
     </div>
   );
 }

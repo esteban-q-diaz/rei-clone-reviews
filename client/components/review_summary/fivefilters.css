@@ -1,0 +1,73 @@
+.flexfilter {
+  display: grid;
+  grid-template-columns: 8% 8% 8% 8% 8% 8%;
+  padding-left: 10px;
+  padding-bottom: 20px;
+  flex-basis: 10px;
+}
+
+.exit-button {
+  justify-items: center;
+}
+
+.filter-button {
+  background-color: #225c4e;
+  color: #ffffff;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.2);
+  font-size: 16px!important;
+  line-height: 28px!important;
+  font-family: "Roboto","Helvetica Neue","Helvetica","Arial",sans-serif!important;
+  font-style: normal!important;
+  font-weight: 349!important;
+  text-decoration: none;
+  text-decoration-line: none !important;
+  text-decoration-thickness: initial !important;
+  text-decoration-style: initial !important;
+  text-decoration-color: initial !important;
+  text-transform: none!important;
+  text-shadow: none!important;
+  background-image: -webkit-linear-gradient(top,rgba(255,255,255,.1) 0,rgba(255,255,255,0) 100%);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.2)!important;
+  padding-top: .5em!important;
+  padding-right: 1em!important;
+  padding-bottom: .5em!important;
+  padding-left: 1em!important;
+  border-radius: 2px 2px 2px 2px;
+  border-top-width: 0!important;
+  border-top-style: none!important;
+  border-top-color: transparent!important;
+  border-right-width: 0!important;
+  border-right-style: none!important;
+  border-right-color: transparent!important;
+  border-bottom-width: 0!important;
+  border-bottom-style: none!important;
+  border-bottom-color: transparent!important;
+  border-left-width: 0!important;
+  border-left-style: none!important;
+  border-left-color: transparent!important;
+  outline: none;
+}
+
+.clear-button {
+  background-color: #fff;
+  color: #292929;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.2);
+  font-size: 16px!important;
+  line-height: 28px!important;
+  font-family: "Roboto","Helvetica Neue","Helvetica","Arial",sans-serif!important;
+  font-style: normal!important;
+  font-weight: 349!important;
+  text-shadow: none!important;
+  background-image: -webkit-linear-gradient(top,rgba(255,255,255,.1) 0,rgba(255,255,255,0) 100%);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.2)!important;
+  padding-top: .5em!important;
+  padding-right: 1em!important;
+  padding-bottom: .5em!important;
+  padding-left: 1em!important;
+  border-radius: 2px 2px 2px 2px;
+  outline: none;
+  border: solid;
+  border-color: #B8B8B8;
+  border-width: 1px;
+
+}

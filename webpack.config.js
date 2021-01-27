@@ -7,7 +7,7 @@ module.exports = {
   entry: path.join(SRC_DIR, 'index.js'),
   output: {
     path: OUT_DIR,
-    filename: 'app.js',
+    filename: 'reviews/app.js',
   },
   module: {
     rules: [

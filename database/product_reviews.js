@@ -80,7 +80,6 @@ const loadMoreItems = async function ([id, page, limit], callback) {
   const currentPage = Number(page[0]);
   const currentLimit = Number(limit[0]);
 
-
   try {
     const results = await ProductReview.find({ productId })
       .sort('reviews.date')
@@ -175,19 +174,32 @@ const helpfulCount = function (param, callback) {
 /* ----- NOT HELPFUL BUTON COUNT-- */
 
 const notHelpfulCount = function (param, callback) {
-  ProductReview.findOneAndUpdate({reviewId: param[0]}, { $inc: { not_helpful_count: 1 } }, {new: true }, (err, review) => {
-    if (err) {
-      console.log('err', review, param[0]);
-    } else {
-      callback(null, review);
+  ProductReview.findOneAndUpdate(
+    { reviewId: param[0] }, { $inc: { not_helpful_count: 1 } }, { new: true }, (err, review) => {
+      if (err) {
+        console.log('err', review, param[0]);
+      } else {
+        callback(null, review);
+      }
     }
-  });
+  );
 };
 
-const sortMostRevent = async function(callback) {
+const sort = async function([star, limit], callback) {
   // refactor this
+  console.log(star, limit)
     try {
-      const results = await ProductReview.find({productId: this.currentProductId}).sort('reviews.date').limit(50);
+      const results = await ProductReview.find({'reviews.stars': star}).sort('reviews.date').limit(limit);
+      callback(null, results);
+    }
+    catch {
+      console.log('error at Mongo sort');
+    }
+}
+
+const sortMostRecent = async function(sortLimit, callback) {
+    try {
+      const results = await ProductReview.find({productId: this.currentProductId}).sort('reviews.date').limit(sortLimit);
       callback(null, results);
     }
     catch {
@@ -195,10 +207,10 @@ const sortMostRevent = async function(callback) {
     }
 }
 
-const highToLow = async function(callback) {
+const highToLow = async function(sortLimit, callback) {
   // refactor this
     try {
-      const results = await ProductReview.find({productId: this.currentProductId}).sort({'reviews.stars': -1}).limit(50);
+      const results = await ProductReview.find({productId: this.currentProductId}).sort({'reviews.stars': -1}).limit(sortLimit);
       callback(null, results);
     }
     catch {
@@ -206,10 +218,10 @@ const highToLow = async function(callback) {
     }
 }
 
-const lowToHigh = async function(callback) {
+const lowToHigh = async function(sortLimit, callback) {
   // refactor this
     try {
-      const results = await ProductReview.find({productId: this.currentProductId}).sort({'reviews.stars': 1}).limit(50);
+      const results = await ProductReview.find({productId: this.currentProductId}).sort({'reviews.stars': 1}).limit(sortLimit);
       callback(null, results);
     }
     catch {
@@ -217,10 +229,10 @@ const lowToHigh = async function(callback) {
     }
 }
 
-const mostHelpful = async function(callback) {
+const mostHelpful = async function(sortLimit, callback) {
   // refactor this
     try {
-      const results = await ProductReview.find({productId: this.currentProductId}).sort({'helpful_count': -1}).limit(50);
+      const results = await ProductReview.find({ productId: this.currentProductId }).sort({ 'helpful_count': -1 }).limit(sortLimit);
       callback(null, results);
     }
     catch {
@@ -228,10 +240,10 @@ const mostHelpful = async function(callback) {
     }
 }
 
-const mostRelevant = async function(callback) {
+const mostRelevant = async function(sortLimit, callback) {
   // refactor this
     try {
-      const results = await ProductReview.find({productId: this.currentProductId}).sort({'reviews.review_total': -1}).limit(50)
+      const results = await ProductReview.find({productId: this.currentProductId}).sort({'reviews.review_total': -1}).limit(sortLimit)
       // .exec((err, results) =>{
       //   if (err)...
       // });
@@ -243,5 +255,5 @@ const mostRelevant = async function(callback) {
 }
 
 module.exports = {
-  ProductReview, getReviews, saveReview, helpfulCount, getItemReviews, notHelpfulCount, sortMostRevent, highToLow, lowToHigh, mostHelpful, mostRelevant, loadMoreItems,
+  ProductReview, getReviews, saveReview, helpfulCount, getItemReviews, notHelpfulCount, sortMostRecent, highToLow, lowToHigh, mostHelpful, mostRelevant, loadMoreItems, sort,
 };

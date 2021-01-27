@@ -11,13 +11,14 @@ import TwoFilter from './filters/TwoFilter';
 import OneFilter from './filters/OneFilter';
 import ClearFilters from './filters/ClearFilters';
 import './ReviewSnapshot.css';
+import './fivefilters.css';
 
 
 function ReviewSnapshot({
   ratingsCount, sortRatings, averageRatings,
   currentReview, fiveFilter, fourFilter,
   threeFilter, twoFilter, oneFilter,
-  clear, closeFilterClick, filterClick,
+  clear, closeFilterClick, filterClick, currentReviewCount,
 }) {
   const five = ratingsCount.five;
   const four = ratingsCount.four;
@@ -54,7 +55,6 @@ function ReviewSnapshot({
                   tabIndex={0}
                   className="fiveFilterr"
                   onClick={(e) => { sortRatings(e, 5); }}
-                  onKeyDown={(e) => { sortRatings(e, 5); }}
                 >
                   5
                   <GrStar />
@@ -69,7 +69,6 @@ function ReviewSnapshot({
                   tabIndex={0}
                   className="fiveFilterr"
                   onClick={(e) => { sortRatings(e, 4); }}
-                  onKeyDown={(e) => { sortRatings(e, 4); }}
                 >
                   4
                   <GrStar />
@@ -84,7 +83,6 @@ function ReviewSnapshot({
                   tabIndex={0}
                   className="fiveFilterr"
                   onClick={(e) => { sortRatings(e, 3); }}
-                  onKeyDown={(e) => { sortRatings(e, 3); }}
                 >
                   3
                   <GrStar />
@@ -99,7 +97,6 @@ function ReviewSnapshot({
                   tabIndex={0}
                   className="fiveFilterr"
                   onClick={(e) => { sortRatings(e, 2); }}
-                  onKeyDown={(e) => { sortRatings(e, 2); }}
                 >
                   2
                   <GrStar />
@@ -114,7 +111,6 @@ function ReviewSnapshot({
                   tabIndex={0}
                   className="fiveFilterr"
                   onClick={(e) => { sortRatings(e, 1); }}
-                  onKeyDown={(e) => { sortRatings(e, 1); }}
                 >
                   1
                   <GrStar />
@@ -143,7 +139,7 @@ function ReviewSnapshot({
             {'1 - '}
             {`${currentReview.length} `}
             {'of '}
-            {`${currentReview.length} `}
+            {`${currentReviewCount} `}
             {'Reviews '}
           </p>
           {/* The text below should only appear is the filters are activaters */}
@@ -157,67 +153,68 @@ function ReviewSnapshot({
           />
         </div>
       </div>
+      <div className="flexfilter">
+        {
+            oneFilter ? (
+              <OneFilter
+                currentReview={currentReview}
+                closeFilterClick={closeFilterClick}
+              />
 
-      {
-          fiveFilter ? (
-            <FiveFilter
-              currentReview={currentReview}
-              closeFilterClick={closeFilterClick}
-            />
+            )
+              : null
+          }
+        {
+            twoFilter ? (
+              <TwoFilter
+                currentReview={currentReview}
+                closeFilterClick={closeFilterClick}
+              />
 
-          )
-            : null
-        }
-      {
-          fourFilter ? (
-            <FourFilter
-              currentReview={currentReview}
-              closeFilterClick={closeFilterClick}
-            />
+            )
+              : null
+          }
+        {
+            threeFilter ? (
+              <ThreeFilter
+                currentReview={currentReview}
+                closeFilterClick={closeFilterClick}
+              />
 
-          )
-            : null
-        }
-      {
-          threeFilter ? (
-            <ThreeFilter
-              currentReview={currentReview}
-              closeFilterClick={closeFilterClick}
-            />
+            )
+              : null
+          }
+        {
+            fourFilter ? (
+              <FourFilter
+                currentReview={currentReview}
+                closeFilterClick={closeFilterClick}
+              />
 
-          )
-            : null
-        }
-      {
-          twoFilter ? (
-            <TwoFilter
-              currentReview={currentReview}
-              closeFilterClick={closeFilterClick}
-            />
+            )
+              : null
+          }
+        {
+            fiveFilter ? (
+              <FiveFilter
+                currentReview={currentReview}
+                closeFilterClick={closeFilterClick}
+              />
 
-          )
-            : null
-        }
-      {
-          oneFilter ? (
-            <OneFilter
-              currentReview={currentReview}
-              closeFilterClick={closeFilterClick}
-            />
+            )
+              : null
+          }
+        {
+            clear ? (
+              <ClearFilters
+                currentReview={currentReview}
+                closeFilterClick={closeFilterClick}
+              />
 
-          )
-            : null
-        }
-      {
-          clear ? (
-            <ClearFilters
-              currentReview={currentReview}
-              closeFilterClick={closeFilterClick}
-            />
-
-          )
-            : null
-        }
+            )
+              : null
+          }
+      </div>
     </div>
   );
 }

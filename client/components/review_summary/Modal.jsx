@@ -4,6 +4,7 @@ import './ModalStyle.css';
 import Form from './Form.jsx'
 
 function Modal({ currentReview, closeForm, submitForm }) {
+  // state if modal is present change whole body section to black screen with lower opacity
   return (
     <div className="modal">
       <div className="modal-content">
