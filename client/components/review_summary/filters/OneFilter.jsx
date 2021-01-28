@@ -5,7 +5,7 @@ import { IoIosCloseCircle } from "react-icons/io";
 function OneFilter({ closeFilterClick }) {
   return (
     <div>
-      <button className="filter-button" type="submit" onClick={(e) => closeFilterClick(e, 2)}>
+      <button className="filter-button" type="submit" onClick={(e) => closeFilterClick(e, 1)}>
         {'1 Stars '}
         <IoIosCloseCircle />
       </button>
