@@ -15,30 +15,52 @@ function UserDetailsItems({ currentReview, onHelpfulClick }) {
   const [oneStar, setOneStar] = useState(false);
   const [count, setCount] = useState(0);
 
-  // Theres a bug that happens whenever u sort by star rating the star amounts get all messed up
   function checkStarRating() {
+
     if (currentReview.reviews[0].stars === 5) {
+      setFourStar (prevState => prevState = false);
+      setThreeStar (prevState => prevState = false);
+      setTwoStar (prevState => prevState = false);
+      setOneStar (prevState => prevState = false);
       setFiveStar (prevState => prevState = true);
     }
     if (currentReview.reviews[0].stars === 4) {
+      setFiveStar(prevState => prevState = false);
+      setThreeStar (prevState => prevState = false);
+      setTwoStar (prevState => prevState = false);
+      setOneStar (prevState => prevState = false);
       setFourStar (prevState => prevState = true);
     }
     if (currentReview.reviews[0].stars === 3) {
+      setFiveStar(prevState => prevState = false)
+      setFourStar (prevState => prevState = false);
+      setTwoStar (prevState => prevState = false);
+      setOneStar (prevState => prevState = false);
       setThreeStar (prevState => prevState = true);
     }
     if (currentReview.reviews[0].stars === 2) {
+      setFiveStar(prevState => prevState = false)
+      setFourStar (prevState => prevState = false);
+      setThreeStar (prevState => prevState = false);
+      setOneStar (prevState => prevState = false);
       setTwoStar (prevState => prevState = true);
     }
     if (currentReview.reviews[0].stars === 1) {
+      setFiveStar(prevState => prevState = false)
+      setFourStar (prevState => prevState = false);
+      setThreeStar (prevState => prevState = false);
+      setTwoStar (prevState => prevState = false);
       setOneStar (prevState => prevState = true);
     }
   }
 
   useEffect(() => {
-    if (count === 0) {
-      checkStarRating();
-      setCount(prevState => prevState + 1);
-    }
+    // console.log("five star: ", currentReview.reviews[0].stars, fiveStar)
+    checkStarRating();
+    // if (count === 0) {
+    //   checkStarRating();
+    //   setCount(prevState => prevState + 1);
+    // }
   });
 
   return (
@@ -46,8 +68,8 @@ function UserDetailsItems({ currentReview, onHelpfulClick }) {
 
       <div className="flexuser">
         <div className="userDetails">
-          <h2 className="review-name">
-            {currentReview.reviews[0].name}
+        <h2 className="review-name">
+            {`${currentReview.reviews[0].name} `}
             in
           </h2>
           <p>
