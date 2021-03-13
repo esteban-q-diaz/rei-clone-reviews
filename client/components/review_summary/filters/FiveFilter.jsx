@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import './filterbutton.css';
-import { IoIosCloseCircle } from "react-icons/io";
+import { IoIosCloseCircle } from "react-icons/Io";
 
 function FiveFilter({ closeFilterClick }) {
   return (
