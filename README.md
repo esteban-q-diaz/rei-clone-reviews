@@ -15,6 +15,11 @@ My contribution to the team was the REI Customer Reviews section.  I implemented
 # DEMO
 
 ![Clone Demo](https://rei-bucket-fec.s3-us-west-1.amazonaws.com/rei-1.gif)
+![Clone Demo](https://rei-bucket-fec.s3-us-west-1.amazonaws.com/rei-2.gif)
+![Clone Demo](https://rei-bucket-fec.s3-us-west-1.amazonaws.com/rei-3.gif)
+![Clone Demo](https://rei-bucket-fec.s3-us-west-1.amazonaws.com/rei-4.gif)
+![Clone Demo](https://rei-bucket-fec.s3-us-west-1.amazonaws.com/rei-5.gif)
+![Clone Demo](https://rei-bucket-fec.s3-us-west-1.amazonaws.com/rei-6.gif)
 
 # Setup
 
