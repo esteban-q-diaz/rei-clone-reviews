@@ -12,6 +12,9 @@ My contribution to the team was the REI Customer Reviews section.  I implemented
 * Add to helpful count (yes/no)
 * Load more pagination - loads 12 reviews at a time
 
+# DEMO
+
+![Clone Demo](https://media.giphy.com/media/vFKqnCdLPNOKc/giphy.gif)
 
 # Setup
 
