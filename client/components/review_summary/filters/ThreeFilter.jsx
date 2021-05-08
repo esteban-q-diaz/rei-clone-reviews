@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { IoIosCloseCircle } from "react-icons/Io";
+import { IoIosCloseCircle } from "../../../../node_modules/react-icons/io";
 
 function ThreeFilter({ closeFilterClick }) {
   return (

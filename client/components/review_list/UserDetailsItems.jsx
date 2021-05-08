@@ -5,7 +5,7 @@ import { GrStar } from 'react-icons/gr';
 import './UserDetailsItemsStyle.css';
 import { FaCheckCircle } from 'react-icons/fa';
 import { IconContext } from 'react-icons'
-import { IoMdCloseCircle } from 'react-icons/Io';
+import { IoMdCloseCircle } from '../../../node_modules/react-icons/io';
 
 function UserDetailsItems({ currentReview, onHelpfulClick }) {
   const [fiveStar, setFiveStar] = useState(false);
