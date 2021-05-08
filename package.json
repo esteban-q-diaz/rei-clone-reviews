@@ -9,7 +9,8 @@
   "scripts": {
     "start": "node server/server.js",
     "dev": "nodemon server/server.js",
-    "build": "webpack -w",
+    "build": "webpack -p",
+    "devBuild": "webpack -w",
     "seed": "node data_generator/seedAsync.js",
     "test": "jest --forceExit --coverage"
   },
