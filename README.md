@@ -15,10 +15,25 @@ My contribution to the team was the REI Customer Reviews section.  I implemented
 # DEMO
 
 ![Clone Demo](https://rei-bucket-fec.s3-us-west-1.amazonaws.com/rei-1.gif)
+
+### Sort By Feature
+
 ![Clone Demo](https://rei-bucket-fec.s3-us-west-1.amazonaws.com/rei-2.gif)
+
+### Filter by Star Reviews
+
 ![Clone Demo](https://rei-bucket-fec.s3-us-west-1.amazonaws.com/rei-3.gif)
+
+### Clear Filters
+
 ![Clone Demo](https://rei-bucket-fec.s3-us-west-1.amazonaws.com/rei-4.gif)
+
+### Pagination - load more
+
 ![Clone Demo](https://rei-bucket-fec.s3-us-west-1.amazonaws.com/rei-5.gif)
+
+### Write a reivew - Linked to Database
+
 ![Clone Demo](https://rei-bucket-fec.s3-us-west-1.amazonaws.com/rei-6.gif)
 
 # Setup
