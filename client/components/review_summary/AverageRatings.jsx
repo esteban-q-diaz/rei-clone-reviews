@@ -13,7 +13,6 @@ function AverageRatings({ averageRatings }) {
   const [count, setCount] = useState(0);
 
   function checkStarRating() {
-    console.log(averageRatings)
     setFiveStar (prevState => prevState = true);
     if (Math.floor(averageRatings) === 5) {
       setFourStar (prevState => prevState = false);

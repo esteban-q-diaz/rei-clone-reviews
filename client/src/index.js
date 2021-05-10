@@ -48,7 +48,6 @@ class App extends React.Component {
     // eslint-disable-next-line react/prop-types
     const { currentItem } = this.props;
     // eslint-disable-next-line no-console
-    console.log('review summary current', currentItem);
     this.getAllReviews();
   }
 

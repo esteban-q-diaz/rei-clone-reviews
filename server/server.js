@@ -79,7 +79,6 @@ app.put('/api/helpful', (req, res) => {
     if (err) {
       res.send(err);
     } else {
-      console.log('helpful count updated');
       res.status(202).send(data);
     }
   });
@@ -94,7 +93,6 @@ app.put('/api/sort', (req, res) => {
     if (err) {
       res.send(err);
     } else {
-      console.log('helpful count updated');
       res.status(202).send(data);
     }
   });
