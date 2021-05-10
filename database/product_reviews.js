@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const connection = require('./connection.js');
-const faker = require('faker');
+const faker = require('../node_modules/faker');
 const moment = require('moment');
 require('regenerator-runtime');
 

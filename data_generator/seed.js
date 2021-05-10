@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const faker = require('faker');
+const faker = require('../node_modules/faker');
 const { productReview } = require('../database/product_reviews.js');
 const connection = require('../database/connection.js');
 
