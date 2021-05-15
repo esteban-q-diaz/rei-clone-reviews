@@ -54,7 +54,7 @@ class App extends React.Component {
   /* ----- GET ALL REVIEWS -----*/
   // eslint-disable-next-line react/sort-comp
   getAllReviews() {
-    axios.get('http://localhost:3000/api/getallreviews')
+    axios.get('https://rei-reviews-clone.herokuapp.com/api/getallreviews')
       .then((res) => {
         this.setState({
           fullReviews: res.data,
@@ -77,7 +77,7 @@ class App extends React.Component {
         totalCount++
       }
     });
-    axios.get(`http://localhost:3000/api/getitemreviews/${index}`)
+    axios.get(`https://rei-reviews-clone.herokuapp.com/api/getitemreviews/${index}`)
       .then((res) => {
         this.setState({
           currentItem: index,
@@ -100,7 +100,7 @@ class App extends React.Component {
   loadMoreItems(e) {
     const { currentItem, pagination, currentReview, count } = this.state;
     e.preventDefault();
-    axios.get(`http://localhost:3000/api/loadmore/${currentItem}/?page=${pagination}&limit=12`)
+    axios.get(`https://rei-reviews-clone.herokuapp.com/api/loadmore/${currentItem}/?page=${pagination}&limit=12`)
       .then((res) => {
         this.setState({
           currentReview: [...currentReview, ...res.data],
@@ -122,7 +122,7 @@ class App extends React.Component {
   submitForm(e, submitData) {
     e.preventDefault();
     // console.log('form clicked', submitData);
-    axios.post(`http://localhost:3000/api/postreview/${this.state.currentItem}`, submitData)
+    axios.post(`https://rei-reviews-clone.herokuapp.com/api/postreview/${this.state.currentItem}`, submitData)
       .then(res => console.log("the data:", res.data))
       .catch(err => console.log('submit form did not work'))
   }
@@ -186,7 +186,7 @@ class App extends React.Component {
         }
       });
     });
-    axios.put('http://localhost:3000/api/sort', { star, limit: starLimitCount })
+    axios.put('https://rei-reviews-clone.herokuapp.com/api/sort', { star, limit: starLimitCount })
       .then((res) => {
         this.setState({
           currentReview: [...sortedTotal, ...res.data],
@@ -363,7 +363,7 @@ class App extends React.Component {
     const { currentReviewTwo } = this.state
     let sortLimit = currentReviewTwo.length;
     if (e.target.value === 'mostRecent') {
-      axios.post(`http://localhost:3000/api/mostrecent`, { sortLimit })
+      axios.post(`https://rei-reviews-clone.herokuapp.com/api/mostrecent`, { sortLimit })
         .then((res) => {
           this.setState({
             currentReview: res.data,
@@ -374,7 +374,7 @@ class App extends React.Component {
         });
     }
     if (e.target.value === 'highToLow') {
-      axios.post(`http://localhost:3000/api/hightolow`, { sortLimit })
+      axios.post(`https://rei-reviews-clone.herokuapp.com/api/hightolow`, { sortLimit })
         .then((res) => {
           this.setState({
             currentReview: res.data,
@@ -385,7 +385,7 @@ class App extends React.Component {
         });
     }
     if (e.target.value === 'lowToHigh') {
-      axios.post(`http://localhost:3000/api/lowtohigh`, { sortLimit })
+      axios.post(`https://rei-reviews-clone.herokuapp.com/api/lowtohigh`, { sortLimit })
         .then((res) => {
           this.setState({
             currentReview: res.data,
@@ -396,7 +396,7 @@ class App extends React.Component {
         });
     }
     if (e.target.value === 'mostHelpful') {
-      axios.post(`http://localhost:3000/api/mosthelpful`, { sortLimit })
+      axios.post(`https://rei-reviews-clone.herokuapp.com/api/mosthelpful`, { sortLimit })
         .then((res) => {
           this.setState({
             currentReview: res.data,
@@ -407,7 +407,7 @@ class App extends React.Component {
         });
     }
     if (e.target.value === 'mostRelevant') {
-      axios.post(`http://localhost:3000/api/mostrelevant`, { sortLimit })
+      axios.post(`https://rei-reviews-clone.herokuapp.com/api/mostrelevant`, { sortLimit })
         .then((res) => {
           console.log('filter most relevant clicked successs', res.data);
           this.setState({
@@ -425,7 +425,7 @@ class App extends React.Component {
   onHelpfulClick(e, type, reviewId) {
     e.preventDefault();
     if (type === 'yes') {
-      axios.put('http://localhost:3000/api/helpful', { reviewId })
+      axios.put('https://rei-reviews-clone.herokuapp.com/api/helpful', { reviewId })
         .then((res) => {
           console.log('response', res.data);
           this.updateHelpfulClick();
@@ -435,7 +435,7 @@ class App extends React.Component {
         });
     }
     if (type === 'no') {
-      axios.put('http://localhost:3000/api/nothelpful', { reviewId })
+      axios.put('https://rei-reviews-clone.herokuapp.com/api/nothelpful', { reviewId })
         .then(() => {
           this.updateHelpfulClick();
         })
@@ -446,7 +446,7 @@ class App extends React.Component {
   /* ----- UPDATE HELPFUL COUNT IMMEDIATELY-----*/
   updateHelpfulClick() {
     const { currentItem } = this.state;
-    axios.get(`http://localhost:3000/api/getitemreviews/${currentItem}`)
+    axios.get(`https://rei-reviews-clone.herokuapp.com/api/getitemreviews/${currentItem}`)
       .then((res) => {
         this.setState({
           currentReview: res.data,
